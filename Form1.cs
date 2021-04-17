@@ -86,6 +86,10 @@ namespace Shooter
         public void Init()
         {
             MapController.Init();
+
+            this.Width = MapController.GetWidth();
+            this.Height = MapController.GetHeight();
+
             dwarfSheet = new Bitmap("C:\\Users\\Данил\\source\\repos\\Shooter\\Sprites\\Man.png");
 
             player = new Entity(100, 100, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
