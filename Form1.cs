@@ -29,6 +29,7 @@ namespace Shooter
            
             Paint += (sender, args) =>
             {
+                MapController.DrawMap(args.Graphics);
                 player.PlayAnimation(args.Graphics);
             };
 
@@ -84,6 +85,10 @@ namespace Shooter
 
         public void Init()
         {
+            MapController.Init();
+
+            this.Width = MapController.GetWidth();
+            this.Height = MapController.GetHeight();
 
             dwarfSheet = new Bitmap("C:\\Users\\Данил\\source\\repos\\Shooter\\Sprites\\Man.png");
 
