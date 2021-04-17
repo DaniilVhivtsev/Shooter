@@ -41,10 +41,33 @@ namespace Shooter
 
         public void OnKeyUp (object sender, KeyEventArgs e)
         {
-            player.dirX = 0;
+
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    player.dirY = 0;
+                    break;
+                case Keys.S:
+                    player.dirY = 0;
+                    break;
+                case Keys.A:
+                    player.dirX = 0;
+                    break;
+                case Keys.D:
+                    player.dirX = 0;
+                    break;
+            }
+
+            if (player.dirX == 0 && player.dirY == 0)
+            {
+                player.isMoovng = false;
+                player.SetAnimationConfiguration(2);
+            }
+
+            /*player.dirX = 0;
             player.dirY = 0;
             player.isMoovng = false;
-            player.SetAnimationConfiguration(2);
+            player.SetAnimationConfiguration(2);*/
         }
 
         public void OnPress(object sender, KeyEventArgs e)
@@ -92,12 +115,13 @@ namespace Shooter
 
             dwarfSheet = new Bitmap("C:\\Users\\Данил\\source\\repos\\Shooter\\Sprites\\Man.png");
 
-            player = new Entity(100, 100, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
+            player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
             timer1.Start();
         }
 
         public void Update(object sender, EventArgs e)
         {
+            PhysicsController.isCollide(player);
             if (player.isMoovng)
                 player.Move();
             Invalidate();
