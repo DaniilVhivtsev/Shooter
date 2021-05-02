@@ -19,24 +19,36 @@ namespace Shooter
         public Image dwarfSheet;
         public Entity player;
 
-        public Form1(Form2 form2)
+        public Form1()
         {
             DoubleBuffered = true;
             InitializeComponent();
 
-            timer1.Interval = 20;
-            timer1.Tick += new EventHandler(Update);
-           
-            Paint += (sender, args) =>
+
+            Button helloButton = new Button();
+            helloButton.BackColor = Color.LightGray;
+            helloButton.ForeColor = Color.DarkGray;
+            helloButton.Location = new Point(10, 10);
+            helloButton.Text = "Привет";
+            this.Controls.Add(helloButton);
+
+            helloButton.Click += (sender, args) =>
             {
-                MapController.DrawMap(args.Graphics);
-                player.PlayAnimation(args.Graphics);
+
+                this.Controls.Remove(helloButton);
+                timer1.Interval = 20;
+                timer1.Tick += new EventHandler(Update);
+
+                Paint += (sender, args) =>
+                {
+                    MapController.DrawMap(args.Graphics);
+                    player.PlayAnimation(args.Graphics);
+                };
+
+                KeyDown += new KeyEventHandler(OnPress);
+                KeyUp += new KeyEventHandler(OnKeyUp);
+                Init();
             };
-
-            KeyDown += new KeyEventHandler(OnPress);
-            KeyUp += new KeyEventHandler(OnKeyUp);
-
-            Init();
         }
 
         public void OnKeyUp (object sender, KeyEventArgs e)
@@ -103,6 +115,13 @@ namespace Shooter
             Invalidate();
         }
 
+/*
+        private void onClick(object sender, EventArgs e)
+        {
+            
+            Hide();
+        }
+*/
         /*private void OnPaint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;

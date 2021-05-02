@@ -17,8 +17,8 @@ namespace Shooter
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Form1 newForm = new Form1(this);
-            newForm.Show();
+            /*Form1 newForm = new Form1(this);
+            newForm.Show();*/
         }
 
         private void Form2_Load(object sender, EventArgs e)
