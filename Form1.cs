@@ -114,18 +114,5 @@ namespace Shooter
                 player.Move();
             Invalidate();
         }
-
-/*
-        private void onClick(object sender, EventArgs e)
-        {
-            
-            Hide();
-        }
-*/
-        /*private void OnPaint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            player.PlayAnimation(g);
-        }*/
     }
 }
