@@ -13,6 +13,7 @@ namespace Shooter.Entites
         public int dirX;
         public int dirY;
         public bool isMoovng;
+        public bool isShoot;
 
         public int flip;
 
