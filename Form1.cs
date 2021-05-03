@@ -113,7 +113,7 @@ namespace Shooter
             this.Width = MapController.GetWidth();
             this.Height = MapController.GetHeight();
 
-            dwarfSheet = new Bitmap("C:\\Users\\Данил\\source\\repos\\Shooter\\Sprites\\Man.png");
+            dwarfSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
 
             player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
             timer1.Start();
@@ -121,16 +121,14 @@ namespace Shooter
 
         public void Update(object sender, EventArgs e)
         {
-            PhysicsController.isCollide(player);
-            if (player.isMoovng)
-                player.Move();
+            //PhysicsController.isCollide(player);
+            if (!PhysicsController.isCollide(player, new Point(player.dirX, player.dirY)))
+            {
+                if (player.isMoovng)
+                    player.Move();
+            }
             Invalidate();
         }
 
-        /*private void OnPaint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-            player.PlayAnimation(g);
-        }*/
     }
 }

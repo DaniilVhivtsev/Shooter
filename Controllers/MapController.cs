@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shooter.Entites;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -13,12 +14,14 @@ namespace Shooter.Controllers
         public static int cellSize = 31;
         public static int[,] map = new int[mapHeight, mapWidth];
         public static Image spriteSheet;
+        public static List<MapEntity> mapObjects;
 
 
         public static void Init()
         {
             map = GetMap();
-            spriteSheet = new Bitmap("C:\\Users\\Данил\\source\\repos\\Shooter\\Sprites\\Forest.png");
+            spriteSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Forest.png");
+            mapObjects = new List<MapEntity>();
         }
         public static int[,] GetMap() => new int[,]
             {
@@ -52,14 +55,20 @@ namespace Shooter.Controllers
                     if (map[i, j] == 10)
                     {
                         g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize * 3, cellSize * 3)), 202, 298, 107, 114, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(cellSize * 3, cellSize * 3));
+                        mapObjects.Add(mapEntity);
                     }
                     if (map[i, j] == 11)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(20, 11)), 581, 114, 19, 11, GraphicsUnit.Pixel);
+                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(20, 12)), 581, 114, 19, 11, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 12));
+                        mapObjects.Add(mapEntity);
                     }
                     if (map[i, j] == 20)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(25, 25)), 610, 4, 10, 8, GraphicsUnit.Pixel);
+                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(20, 18)), 453, 225, 18, 22, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 18));
+                        mapObjects.Add(mapEntity);
                     }
                 }
         }
