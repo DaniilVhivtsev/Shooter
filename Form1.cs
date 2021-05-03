@@ -18,26 +18,42 @@ namespace Shooter
     {
         public Image dwarfSheet;
         public Entity player;
+        public Phisics_Of_Shoot shoot;
 
-        public Form1(Form2 form2)
+        public Form1()
         {
             DoubleBuffered = true;
             InitializeComponent();
 
-            timer1.Interval = 20;
-            timer1.Tick += new EventHandler(Update);
-           
-            Paint += (sender, args) =>
+
+            Button helloButton = new Button();
+            helloButton.BackColor = Color.LightGray;
+            helloButton.ForeColor = Color.DarkGray;
+            helloButton.Location = new Point(10, 10);
+            helloButton.Text = "Привет";
+            this.Controls.Add(helloButton);
+
+            helloButton.Click += (sender, args) =>
             {
-                MapController.DrawMap(args.Graphics);
-                player.PlayAnimation(args.Graphics);
+                
+                this.Controls.Remove(helloButton);
+                timer1.Interval = 20;
+                timer1.Tick += new EventHandler(Update);
+
+
+                Paint += (sender, args) =>
+                {
+                    MapController.DrawMap(args.Graphics);
+                    player.PlayAnimation(args.Graphics);
+                    shoot.PlayShoot(args.Graphics);
+                };
+
+                KeyDown += new KeyEventHandler(OnPress);
+                KeyUp += new KeyEventHandler(OnKeyUp);
+                Init();
             };
-
-            KeyDown += new KeyEventHandler(OnPress);
-            KeyUp += new KeyEventHandler(OnKeyUp);
-
-            Init();
         }
+
 
         public void OnKeyUp (object sender, KeyEventArgs e)
         {
@@ -61,13 +77,9 @@ namespace Shooter
             if (player.dirX == 0 && player.dirY == 0)
             {
                 player.isMoovng = false;
+                player.isShoot = false;
                 player.SetAnimationConfiguration(2);
             }
-
-            /*player.dirX = 0;
-            player.dirY = 0;
-            player.isMoovng = false;
-            player.SetAnimationConfiguration(2);*/
         }
 
         public void OnPress(object sender, KeyEventArgs e)
@@ -100,6 +112,7 @@ namespace Shooter
                     player.dirX = 0;
                     player.dirY = 0;
                     player.isMoovng = false;
+                    player.isShoot = true;
                     player.SetAnimationConfiguration(5);
                     break;
 
@@ -116,6 +129,8 @@ namespace Shooter
             dwarfSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
 
             player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
+            shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
+
             timer1.Start();
         }
 
@@ -126,6 +141,8 @@ namespace Shooter
             {
                 if (player.isMoovng)
                     player.Move();
+                if (player.isShoot)
+                    shoot.MakeShoot();
             }
             Invalidate();
         }
