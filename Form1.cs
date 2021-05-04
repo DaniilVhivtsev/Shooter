@@ -18,7 +18,8 @@ namespace Shooter
     {
         public Image dwarfSheet;
         public Entity player;
-        public Phisics_Of_Shoot shoot;
+
+        public List<Phisics_Of_Shoot> shoots;
 
         public Form1()
         {
@@ -128,8 +129,8 @@ namespace Shooter
             dwarfSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
 
             player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
-            
 
+            shoots = new List<Phisics_Of_Shoot>();
             timer1.Start();
         }
 
@@ -150,9 +151,10 @@ namespace Shooter
         public void Shooting (object sender, EventArgs args)
         {
             var timer2 = new Timer();
-            timer2.Interval = 60;
+            timer2.Interval = 1;
 
-            shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
+            var shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
+            shoots.Add(shoot);
             timer2.Tick += (e, a) =>
             {
                 shoot.MakeShoot();
