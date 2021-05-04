@@ -24,8 +24,8 @@ namespace Shooter.Controllers
 
         public void MakeShoot()
         {
-            position.X += 10;
-            position.Y += 10;
+            position.X += 1;
+            position.Y += 11;
         }
     }
 }
