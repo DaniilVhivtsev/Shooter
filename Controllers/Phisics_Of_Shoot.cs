@@ -42,5 +42,10 @@ namespace Shooter.Controllers
             position.Y += stepY;
             return true;
         }
+
+        public void KillEnemy()
+        {
+            if (array[position.X, position.Y] == 100 )
+        }
     }
 }
