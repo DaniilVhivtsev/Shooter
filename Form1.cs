@@ -172,7 +172,7 @@ namespace Shooter
         public void Shooting (object sender, EventArgs args)
         {
             var timer2 = new Timer();
-            timer2.Interval = 60;
+            timer2.Interval = 10;
 
             var shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
             shoots.Add(shoot);
@@ -184,8 +184,6 @@ namespace Shooter
             };
 
             timer2.Start();
-
-           
             
             Paint += (sender, args) =>
             {
