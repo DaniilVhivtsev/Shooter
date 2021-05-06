@@ -50,6 +50,9 @@ namespace Shooter
 
                 KeyDown += new KeyEventHandler(OnPress);
                 KeyUp += new KeyEventHandler(OnKeyUp);
+
+                MouseDown += new MouseEventHandler(OnPressMouse);
+                MouseUp += new MouseEventHandler(OnUpMouse);
                 Init();
             };
         }
@@ -108,15 +111,33 @@ namespace Shooter
                     player.flip = 1;
                     player.SetAnimationConfiguration(0);
                     break;
-                case Keys.Space:
+                /*case Keys.Space:
+                    player.dirX = 0;
+                    player.dirY = 0;
+                    player.isMoovng = false;
+                    player.isShoot = true;
+                    player.SetAnimationConfiguration(5);
+                    break;*/
+            }
+        }
+
+        public void OnPressMouse(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
                     player.dirX = 0;
                     player.dirY = 0;
                     player.isMoovng = false;
                     player.isShoot = true;
                     player.SetAnimationConfiguration(5);
                     break;
-
             }
+        }
+
+        public void OnUpMouse (object ender, MouseEventArgs e)
+        {
+            player.SetAnimationConfiguration(2);
         }
 
         public void Init()
@@ -151,20 +172,36 @@ namespace Shooter
         public void Shooting (object sender, EventArgs args)
         {
             var timer2 = new Timer();
-            timer2.Interval = 1;
+            timer2.Interval = 60;
 
             var shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
             shoots.Add(shoot);
+
+            var canDoShoot = true;
             timer2.Tick += (e, a) =>
             {
-                shoot.MakeShoot();
+                canDoShoot = shoot.MakeShoot();
             };
+
             timer2.Start();
 
+           
+            
             Paint += (sender, args) =>
             {
-                shoot.PlayShoot(args.Graphics);
+                if (!canDoShoot)
+                {
+                    timer2.Stop();
+                    shoots.Remove(shoot);
+                }
+                else
+                {
+                    shoot.PlayShoot(args.Graphics);
+                }
+
             };
+
+            player.isShoot = false;
         }
 
     }
