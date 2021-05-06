@@ -16,12 +16,15 @@ namespace Shooter.Controllers
         public static Image spriteSheet;
         public static List<MapEntity> mapObjects;
 
+        public static Image spriteSheetForEnemy;
+
 
         public static void Init()
         {
             map = GetMap();
             spriteSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Forest.png");
             mapObjects = new List<MapEntity>();
+            spriteSheetForEnemy = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
         }
         public static int[,] GetMap() => new int[,]
             {
@@ -29,14 +32,14 @@ namespace Shooter.Controllers
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 10, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 10, 0, 0, 0, 7 },
@@ -69,6 +72,12 @@ namespace Shooter.Controllers
                         g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(20, 18)), 453, 225, 18, 22, GraphicsUnit.Pixel);
                         MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 18));
                         mapObjects.Add(mapEntity);
+                    }
+                    if (map[i, j] == 100)
+                    {
+                        g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);
+                       /* MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 18));
+                        mapObjects.Add(mapEntity);*/
                     }
                 }
         }
