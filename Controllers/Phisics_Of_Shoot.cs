@@ -12,7 +12,7 @@ namespace Shooter.Controllers
         public PointF position;
         public float stepX;
         public float stepY;
-        public const int speed = 4;
+        public const int speed = 10;
 
         public int countOfStep;
 
@@ -21,6 +21,7 @@ namespace Shooter.Controllers
             position.X = dir.X;
             position.Y = dir.Y;
 
+            
             stepX = (Cursor.Position.X - position.X) / speed;
             stepY = (Cursor.Position.Y - position.Y) / speed;
 
@@ -29,12 +30,13 @@ namespace Shooter.Controllers
 
         public void PlayShoot (Graphics g)
         {
-            g.DrawRectangle(new Pen(Color.Black, 5), position.X, position.Y, 10, 10);
+            g.DrawEllipse(new Pen(Color.Black, 5), position.X, position.Y, 5, 5);
+            g.DrawEllipse(new Pen(Color.Black, 5), Cursor.Position.X, Cursor.Position.Y, 5, 5);
         }
 
         public bool MakeShoot()
         {
-            if (countOfStep == 5) return false;
+            if (countOfStep == 10) return false;
             countOfStep++;
             position.X += stepX;
             position.Y += stepY;
