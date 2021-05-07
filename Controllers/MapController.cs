@@ -1,4 +1,5 @@
 ﻿using Shooter.Entites;
+using Shooter.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace Shooter.Controllers
         public static List<MapEntity> mapObjects;
 
         public static Image spriteSheetForEnemy;
+        public static List<Enemy> enemies;
 
 
         public static void Init()
@@ -25,6 +27,7 @@ namespace Shooter.Controllers
             spriteSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Forest.png");
             mapObjects = new List<MapEntity>();
             spriteSheetForEnemy = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
+            enemies = new List<Enemy>();
         }
         public static int[,] GetMap() => new int[,]
             {
@@ -76,8 +79,9 @@ namespace Shooter.Controllers
                     if (map[i, j] == 100)
                     {
                         g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);
-                       /* MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 18));
-                        mapObjects.Add(mapEntity);*/
+                        var enemyObject = new Enemy(new Point(i, j), 31, 100);
+                        enemyObject.DrawEnemy(g);
+                        enemies.Add(enemyObject);
                     }
                 }
         }
@@ -136,6 +140,5 @@ namespace Shooter.Controllers
         {
             return cellSize * (mapHeight + 1) - 5 ;
         }
-
     }
 }

@@ -9,14 +9,14 @@ namespace Shooter.Controllers
 {
     public class Phisics_Of_Shoot
     {
-        public PointF position;
-        public float stepX;
-        public float stepY;
+        public Point position;
+        public int stepX;
+        public int stepY;
         public const int speed = 10;
 
         public int countOfStep;
 
-        public Phisics_Of_Shoot(PointF dir)
+        public Phisics_Of_Shoot(Point dir)
         {
             position.X = dir.X;
             position.Y = dir.Y;
@@ -40,12 +40,22 @@ namespace Shooter.Controllers
             countOfStep++;
             position.X += stepX;
             position.Y += stepY;
+            KillEnemy();
             return true;
         }
 
         public void KillEnemy()
         {
-            if (array[position.X, position.Y] == 100 )
+            for (int i = 0; i < MapController.enemies.Count; i++)
+            {
+                var enemy = MapController.enemies[i];
+/*                if (position.X >= enemy.Position.X - enemy.Size / 2 && position.X <= enemy.Position.X + enemy.Size / 2)
+                    if (position.Y >= enemy.Position.Y - enemy.Size / 2 && position.Y <= enemy.Position.Y + enemy.Size / 2)*/
+
+                if (position.X == enemy.Position.X)
+                    if (position.Y == enemy.Position.Y)
+                        enemy.Health -= 50;
+            }
         }
     }
 }
