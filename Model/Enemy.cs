@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Text;
 
 namespace Shooter.Model
@@ -19,7 +20,7 @@ namespace Shooter.Model
             this.Position = position;
             this.Size = size;
             this.Health = health;
-            spriteSheetForEnemy = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
+            spriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
             Death = false;
         }
 
