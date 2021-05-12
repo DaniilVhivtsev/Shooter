@@ -3,6 +3,7 @@ using Shooter.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Text;
 
 namespace Shooter.Controllers
@@ -20,13 +21,13 @@ namespace Shooter.Controllers
         public static Image spriteSheetForEnemy;
         public static List<Enemy> enemies;
 
-
-        public static void Init()
+/*        C:\Users\Данил\Source\Repos\DaniilVhivtsev\Shooter\Sprites\Forest.png
+*/        public static void Init()
         {
             map = GetMap();
-            spriteSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Forest.png");
+            spriteSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Forest.png"));
             mapObjects = new List<MapEntity>();
-            spriteSheetForEnemy = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
+            spriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
             enemies = new List<Enemy>();
         }
         public static int[,] GetMap() => new int[,]

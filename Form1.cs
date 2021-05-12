@@ -38,7 +38,7 @@ namespace Shooter
             {
                 
                 this.Controls.Remove(helloButton);
-                timer1.Interval = 20;
+                timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
 
 
@@ -147,7 +147,7 @@ namespace Shooter
             this.Width = MapController.GetWidth();
             this.Height = MapController.GetHeight();
 
-            dwarfSheet = new Bitmap("C:\\Users\\Полли\\Source\\Repos\\DaniilVhivtsev\\Shooter\\Sprites\\Man.png");
+            dwarfSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
 
             player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
 
@@ -172,7 +172,7 @@ namespace Shooter
         public void Shooting (object sender, EventArgs args)
         {
             var timer2 = new Timer();
-            timer2.Interval = 10;
+            timer2.Interval = 1;
 
             var shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
             shoots.Add(shoot);
