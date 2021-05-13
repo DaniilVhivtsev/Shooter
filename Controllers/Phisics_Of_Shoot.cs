@@ -14,16 +14,19 @@ namespace Shooter.Controllers
         public int stepY;
         public const int speed = 10;
 
+        public Point cursorPosition;
+
         public int countOfStep;
 
         public Phisics_Of_Shoot(Point dir)
         {
-            position.X = dir.X;
-            position.Y = dir.Y;
+            position.X = dir.X - 5;
+            position.Y = dir.Y + 20;
 
-            
-            stepX = (Cursor.Position.X - position.X) / speed;
-            stepY = (Cursor.Position.Y - position.Y) / speed;
+            cursorPosition.X = Cursor.Position.X;
+            cursorPosition.Y = Cursor.Position.Y - 20;
+            stepX = (cursorPosition.X - position.X) / speed;
+            stepY = (cursorPosition.Y - position.Y) / speed;
 
             countOfStep = 0;
         }
@@ -31,7 +34,7 @@ namespace Shooter.Controllers
         public void PlayShoot (Graphics g)
         {
             g.DrawEllipse(new Pen(Color.Black, 5), position.X, position.Y, 5, 5);
-            g.DrawEllipse(new Pen(Color.Black, 5), Cursor.Position.X, Cursor.Position.Y, 5, 5);
+            g.DrawEllipse(new Pen(Color.Black, 5), cursorPosition.X, cursorPosition.Y, 5, 5);
         }
 
         public bool MakeShoot()
@@ -49,12 +52,14 @@ namespace Shooter.Controllers
             for (int i = 0; i < MapController.enemies.Count; i++)
             {
                 var enemy = MapController.enemies[i];
-/*                if (position.X >= enemy.Position.X - enemy.Size / 2 && position.X <= enemy.Position.X + enemy.Size / 2)
-                    if (position.Y >= enemy.Position.Y - enemy.Size / 2 && position.Y <= enemy.Position.Y + enemy.Size / 2)*/
 
+                if (position.X * 31 >= enemy.Position.X - enemy.Size / 2 && position.X * 31 <= enemy.Position.X + enemy.Size / 2)
+                    if (position.Y * 31 >= enemy.Position.Y + enemy.Size / 2 && position.Y * 31 <= enemy.Position.Y + enemy.Size / 2)
+                        enemy.Health -= 100;
+/*
                 if (position.X == enemy.Position.X)
-                    if (position.Y == enemy.Position.Y)
-                        enemy.Health -= 50;
+                    if (position.Y == enemy.Position.Y)*/
+                       
             }
         }
     }
