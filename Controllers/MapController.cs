@@ -29,6 +29,7 @@ namespace Shooter.Controllers
             mapObjects = new List<MapEntity>();
             spriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
             enemies = new List<Enemy>();
+            MakeEnemies();
         }
         public static int[,] GetMap() => new int[,]
             {
@@ -77,14 +78,37 @@ namespace Shooter.Controllers
                         MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 18));
                         mapObjects.Add(mapEntity);
                     }
+                    /*if (map[i, j] == 100)
+                    {
+                        *//*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*//*
+                        var enemyObject = new Enemy(new Point(i, j), 31, 100);
+                        *//*enemyObject.DrawEnemy(g);*//*
+                        enemies.Add(enemyObject);
+                    }*/
+                }
+        }
+
+        public static void MakeEnemies()
+        {
+            for (int i = 0; i < mapWidth; i++)
+                for (int j = 0; j < mapHeight; j++)
+                {
                     if (map[i, j] == 100)
                     {
-                        g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);
+                        /*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*/
                         var enemyObject = new Enemy(new Point(i, j), 31, 100);
-                        enemyObject.DrawEnemy(g);
+                        /*enemyObject.DrawEnemy(g);*/
                         enemies.Add(enemyObject);
                     }
                 }
+        }
+
+        public static void DrawEnemies(Graphics g)
+        {
+            foreach (var enemy in enemies)
+            {
+                enemy.DrawEnemy(g);
+            }
         }
 
         public static void DrawMap(Graphics g)
@@ -129,6 +153,7 @@ namespace Shooter.Controllers
                         g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 0, 0, 20, 20, GraphicsUnit.Pixel);
                     }
                 }
+            DrawEnemies(g);
             SeedMap(g);
         }
 
