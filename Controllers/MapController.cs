@@ -37,20 +37,20 @@ namespace Shooter.Controllers
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 10, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 10, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 7 },
                 {3, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4 }
             };
@@ -62,8 +62,8 @@ namespace Shooter.Controllers
                 {
                     if (map[i, j] == 10)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize * 3, cellSize * 3)), 202, 298, 107, 114, GraphicsUnit.Pixel);
-                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(cellSize * 3, cellSize * 3));
+                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(107, 114)), 202, 298, 107, 114, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(107, 114));
                         mapObjects.Add(mapEntity);
                     }
                     if (map[i, j] == 11)
@@ -96,7 +96,7 @@ namespace Shooter.Controllers
                     if (map[i, j] == 100)
                     {
                         /*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*/
-                        var enemyObject = new Enemy(new Point(i, j), 31, 100);
+                        var enemyObject = new Enemy(new Point(j, i), 31, 100);
                         /*enemyObject.DrawEnemy(g);*/
                         enemies.Add(enemyObject);
                     }

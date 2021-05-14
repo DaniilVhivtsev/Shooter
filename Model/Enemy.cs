@@ -30,11 +30,12 @@ namespace Shooter.Model
         public void DrawEnemy(Graphics g)
         {
             if (Health > 0)
-                g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.Y, Position.Y), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);
+                g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(17, 21)), 5, 11, 17, 21, GraphicsUnit.Point);
             else 
-                g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.Y, Position.Y), new Size(31, 31)), 32 * 6, 32 * 4, 31, 31, GraphicsUnit.Pixel);
+                g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(31, 31)), 32 * 6, 32 * 4, 31, 31, GraphicsUnit.Pixel);
 
             g.DrawEllipse(new Pen(Color.Black, 5), Position.X, Position.Y , 5, 5);
+
         }
     }
 }
