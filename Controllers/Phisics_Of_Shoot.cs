@@ -53,15 +53,9 @@ namespace Shooter.Controllers
             {
                 var enemy = MapController.enemies[i];
 
-                if (position.X >= enemy.Position.X && position.X <= enemy.Position.X + enemy.Size + 31)
-                    if (position.Y >= enemy.Position.Y  && position.Y <= enemy.Position.Y + enemy.Size)
-                        enemy.Health -= 100;
-                /*
-                                if (position.X == enemy.Position.X)
-                                    if (position.Y == enemy.Position.Y)
-                if (position.X >= enemy.Position.X - enemy.Size / 2 && position.X * 31 <= enemy.Position.X + enemy.Size / 2)
-                                    if (position.Y >= enemy.Position.Y + enemy.Size / 2 && position.Y * 31 <= enemy.Position.Y + enemy.Size / 2)
-                 */
+                if (position.X >= enemy.Position.X - enemy.Size / 2 && position.X <= enemy.Position.X + enemy.Size / 2)
+                    if (position.Y >= enemy.Position.Y - enemy.Size / 2 && position.Y <= enemy.Position.Y + enemy.Size / 2)
+                        enemy.Health -= 10;
 
             }
         }
