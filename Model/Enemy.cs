@@ -10,10 +10,21 @@ namespace Shooter.Model
 {
     public class Enemy
     {
+        private int health;
         public int Health
         {
-            get; set;
+            get
+            {
+                return health;
+            }
+            set
+            {
+                health = value;
+                if (health <= 0)
+                    Death = true;
+            }
         }
+
         public Point Position;
         public int Size;
         public Image spriteSheetForEnemy;
@@ -31,7 +42,7 @@ namespace Shooter.Model
 
         public void DrawEnemy(Graphics g)
         {
-            if (Health > 0)
+            if (!Death)
                 g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(17, 21)), 5, 11, 17, 21, GraphicsUnit.Point);
             else 
                 g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(31, 31)), 32 * 6, 32 * 4, 31, 31, GraphicsUnit.Pixel);
