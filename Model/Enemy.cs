@@ -47,7 +47,7 @@ namespace Shooter.Model
             else 
                 g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(31, 31)), 32 * 6, 32 * 4, 31, 31, GraphicsUnit.Pixel);
 
-            g.DrawEllipse(new Pen(Color.Black, 5), Position.X, Position.Y , 5, 5);
+            g.DrawRectangle(new Pen(Color.Black, 2), Position.X, Position.Y, 17, 21);
         }
     }
 }
