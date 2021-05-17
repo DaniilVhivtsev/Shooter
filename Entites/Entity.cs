@@ -30,6 +30,25 @@ namespace Shooter.Entites
 
         public Image spriteSheet;
 
+        public static bool Death;
+
+        private static int health;
+        public static int Health
+        {
+            get
+            {
+                return health;
+            }
+            set
+            {
+                var form1 = new Form1();
+                form1.makeSmallerPBar(health - value);
+                health = value;
+                if (health <= 0)
+                    Death = true;
+            }
+        }
+
         public Entity(int positionX, int positionY, int idleFrames, int runFrames, int atackFrames, int deathFrames, Image spriteSheet)
         {
             posX = positionX;
@@ -44,6 +63,8 @@ namespace Shooter.Entites
             currentFrame = 0;
             currentLimit = idleFrames;
             flip = 1;
+            Health = 100;
+            Death = false;
         }
 
         public void Move ()

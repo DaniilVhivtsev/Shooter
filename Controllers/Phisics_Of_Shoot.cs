@@ -37,7 +37,7 @@ namespace Shooter.Controllers
             position.Y = dir.Y + 20;
 
             stepX = (person.X - position.X) / speed;
-            stepY = (person.Y - 20 - position.Y) / speed;
+            stepY = (person.Y + 20 - position.Y) / speed;
 
             countOfStep = 0;
         }
@@ -46,7 +46,9 @@ namespace Shooter.Controllers
         {
             g.DrawEllipse(new Pen(Color.Black, 5), position.X, position.Y, 5, 5);
             g.DrawEllipse(new Pen(Color.Black, 1), cursorPosition.X, cursorPosition.Y, 5, 5);
-        }
+
+/*            g.DrawRectangle(new Pen(Color.Black, 5), Entity.posX * 31, Entity.posY * 31, 17, 21);
+*/        }
 
         public bool MakeShoot()
         {
@@ -78,8 +80,15 @@ namespace Shooter.Controllers
             countOfStep++;
             position.X += stepX;
             position.Y += stepY;
-            
+            KillHero();
             return true;
+        }
+
+        public void KillHero()
+        {
+            if (position.X >= Entity.posX * 31 && position.X <= Entity.posX * 31 + 17)
+                if (position.Y >= Entity.posY * 31 && position.Y <= Entity.posY * 31 + 21)
+                    Entity.Health -= 10;
         }
     }
 }
