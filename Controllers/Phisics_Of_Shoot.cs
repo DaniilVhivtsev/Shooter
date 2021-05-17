@@ -31,6 +31,17 @@ namespace Shooter.Controllers
             countOfStep = 0;
         }
 
+        public Phisics_Of_Shoot(Point dir, Point person)
+        {
+            position.X = dir.X - 5;
+            position.Y = dir.Y + 20;
+
+            stepX = (person.X - position.X) / speed;
+            stepY = (person.Y - 20 - position.Y) / speed;
+
+            countOfStep = 0;
+        }
+
         public void PlayShoot (Graphics g)
         {
             g.DrawEllipse(new Pen(Color.Black, 5), position.X, position.Y, 5, 5);
@@ -58,6 +69,17 @@ namespace Shooter.Controllers
                         enemy.Health -= 10;
 
             }
+        }
+
+        public bool MakeShootEnemy()
+        {
+            if (countOfStep == 10) return false;
+
+            countOfStep++;
+            position.X += stepX;
+            position.Y += stepY;
+            
+            return true;
         }
     }
 }

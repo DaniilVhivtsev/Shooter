@@ -19,18 +19,23 @@ namespace Shooter
         public Image dwarfSheet;
         public Entity player;
 
+        private List<Enemy> enemies;
+
         public List<Phisics_Of_Shoot> shoots;
+        public List<Phisics_Of_Shoot> shootsEnemy;
 
         public Form1()
         {
+            
             DoubleBuffered = true;
             InitializeComponent();
 
+            
 
             Button helloButton = new Button();
             helloButton.BackColor = Color.LightGray;
             helloButton.ForeColor = Color.DarkGray;
-            helloButton.Location = new Point(10, 10);
+            helloButton.Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2);
             helloButton.Text = "Привет";
             this.Controls.Add(helloButton);
 
@@ -54,6 +59,11 @@ namespace Shooter
                 MouseDown += new MouseEventHandler(OnPressMouse);
                 MouseUp += new MouseEventHandler(OnUpMouse);
                 Init();
+
+                enemies = new List<Enemy>();
+                enemies = MapController.enemies;
+
+                EnemiesDo();
             };
         }
 
@@ -152,6 +162,8 @@ namespace Shooter
             player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
 
             shoots = new List<Phisics_Of_Shoot>();
+            shootsEnemy = new List<Phisics_Of_Shoot>();
+
             timer1.Start();
         }
 
@@ -174,7 +186,7 @@ namespace Shooter
             var timer2 = new Timer();
             timer2.Interval = 1;
 
-            var shoot = new Phisics_Of_Shoot(new Point(player.posX, player.posY));
+            var shoot = new Phisics_Of_Shoot(new Point(Entity.posX, Entity.posY));
             shoots.Add(shoot);
 
             var canDoShoot = true;
@@ -202,6 +214,56 @@ namespace Shooter
             player.isShoot = false;
         }
 
+
+        public void EnemiesDo()
+        {
+            var timer = new Timer();
+            timer.Interval = 1000;
+            
+            int i = 0;
+
+            timer.Tick += (e, a) =>
+            {
+                MakeShootByEnemy(i);
+                i++;
+
+                if (i == enemies.Count)
+                    i = 0;
+            };
+            timer.Start();
+        }
+
+        public void MakeShootByEnemy(int indexOfEnemy)
+        {
+            var timer = new Timer();
+            timer.Interval = 100;
+
+            var shoot = new Phisics_Of_Shoot(new Point(enemies[indexOfEnemy].Position.X, enemies[indexOfEnemy].Position.Y), new Point(Entity.posX, Entity.posY));
+            shootsEnemy.Add(shoot);
+
+            var canDoShoot = true;
+            timer.Tick += (e, a) =>
+            {
+                canDoShoot = shoot.MakeShootEnemy();
+            };
+
+            Paint += (sender, args) =>
+            {
+                if (!canDoShoot)
+                {
+                    timer.Stop();
+                    shootsEnemy.Remove(shoot);
+                }
+                else
+                {
+                    shoot.PlayShoot(args.Graphics);
+                }
+
+            };
+
+            timer.Start();
+
+        }
 
     }
 }

@@ -7,8 +7,8 @@ namespace Shooter.Entites
 {
     public class Entity
     {
-        public int posX;
-        public int posY;
+        public static int posX;
+        public static int posY;
 
         public int dirX;
         public int dirY;
@@ -30,10 +30,10 @@ namespace Shooter.Entites
 
         public Image spriteSheet;
 
-        public Entity(int posX, int posY, int idleFrames, int runFrames, int atackFrames, int deathFrames, Image spriteSheet)
+        public Entity(int positionX, int positionY, int idleFrames, int runFrames, int atackFrames, int deathFrames, Image spriteSheet)
         {
-            this.posX = posX;
-            this.posY = posY;
+            posX = positionX;
+            posY = positionY;
             this.idleFrames = idleFrames;
             this.runFrames = runFrames;
             this.atackFrames = atackFrames;

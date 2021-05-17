@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Shooter.Controllers;
+using Shooter.Entites;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
