@@ -45,7 +45,7 @@ namespace Shooter.Controllers
         public void PlayShoot (Graphics g)
         {
             g.DrawEllipse(new Pen(Color.Black, 5), position.X, position.Y, 5, 5);
-            g.DrawEllipse(new Pen(Color.Black, 5), cursorPosition.X, cursorPosition.Y, 5, 5);
+            g.DrawEllipse(new Pen(Color.Black, 1), cursorPosition.X, cursorPosition.Y, 5, 5);
         }
 
         public bool MakeShoot()
@@ -64,8 +64,8 @@ namespace Shooter.Controllers
             {
                 var enemy = MapController.enemies[i];
 
-                if (position.X >= enemy.Position.X - enemy.Size / 2 && position.X <= enemy.Position.X + enemy.Size / 2)
-                    if (position.Y >= enemy.Position.Y - enemy.Size / 2 && position.Y <= enemy.Position.Y + enemy.Size / 2)
+                if (position.X >= enemy.Position.X  && position.X <= enemy.Position.X + 17)
+                    if (position.Y >= enemy.Position.Y && position.Y <= enemy.Position.Y + 21)
                         enemy.Health -= 10;
 
             }
