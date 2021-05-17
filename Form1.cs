@@ -64,6 +64,14 @@ namespace Shooter
                 enemies = MapController.enemies;
 
                 EnemiesDo();
+
+                pBar1.Visible = true;
+                pBar1.Value = 100;
+
+                label1.Visible = true;
+                label1.Text = "Health";
+
+                /*Test_makeSmallerPBar();*/
             };
         }
 
@@ -264,6 +272,29 @@ namespace Shooter
             timer.Start();
 
         }
+
+        private void progressBar1_Click(object sender, EventArgs e)
+        {
+        }
+
+        public void makeSmallerPBar (int valiable)
+        {
+            if (pBar1.Value - valiable >= 0)
+                pBar1.Value -= valiable;
+        }
+
+        /*public void Test_makeSmallerPBar()
+        {
+            var timer = new Timer();
+            timer.Interval = 10;
+            timer.Tick += (e, a) =>
+            {
+                makeSmallerPBar(5);
+                if (pBar1.Value == 0) timer.Stop();
+            };
+            timer.Start();
+            
+        }*/
 
     }
 }
