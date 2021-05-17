@@ -14,8 +14,8 @@ namespace Shooter.Controllers
             {
                 var currentObject = MapController.mapObjects[i];
                 PointF delta = new PointF();
-                delta.X = (entity.posX + entity.size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
-                delta.Y = (entity.posY + entity.size / 2) - (currentObject.position.Y + currentObject.size.Height / 2);
+                delta.X = (Entity.posX + entity.size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
+                delta.Y = (Entity.posY + entity.size / 2) - (currentObject.position.Y + currentObject.size.Height / 2);
 
                 if (Math.Abs(delta.X) <= entity.size / 2 + currentObject.size.Width / 2)
                 {
