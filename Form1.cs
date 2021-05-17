@@ -249,7 +249,7 @@ namespace Shooter
 
             Paint += (sender, args) =>
             {
-                if (!canDoShoot)
+                if (!canDoShoot || enemies[indexOfEnemy].Death)
                 {
                     timer.Stop();
                     shootsEnemy.Remove(shoot);
