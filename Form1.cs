@@ -224,11 +224,10 @@ namespace Shooter
             player.isShoot = false;
         }
 
-
         public void EnemiesDo()
         {
             var timer = new Timer();
-            timer.Interval = 1000;
+            timer.Interval = 2000;
             
             int i = 0;
 
@@ -239,7 +238,7 @@ namespace Shooter
 
                 if (i == enemies.Count)
                     i = 0;
-                makeSmallerPBar();
+                /*makeSmallerPBar();*/
             };
             timer.Start();
         }
@@ -256,6 +255,7 @@ namespace Shooter
             timer.Tick += (e, a) =>
             {
                 canDoShoot = shoot.MakeShootEnemy();
+                makeSmallerPBar();
             };
 
             Paint += (sender, args) =>

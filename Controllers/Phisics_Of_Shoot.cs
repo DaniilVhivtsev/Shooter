@@ -36,8 +36,8 @@ namespace Shooter.Controllers
             position.X = dir.X - 5;
             position.Y = dir.Y + 20;
 
-            stepX = (person.X - position.X) / speed;
-            stepY = (person.Y + 20 - position.Y) / speed;
+            stepX = (person.X + 14 - position.X) / speed;
+            stepY = (person.Y + 14 - position.Y) / speed;
 
             countOfStep = 0;
         }
@@ -80,15 +80,20 @@ namespace Shooter.Controllers
             countOfStep++;
             position.X += stepX;
             position.Y += stepY;
-            KillHero();
-            return true;
+
+            return !KillHero();
         }
 
-        public void KillHero()
+        public bool KillHero()
         {
-            /*if (position.X >= Entity.posX * 31 && position.X <= Entity.posX * 31 + 17)
-                if (position.Y >= Entity.posY * 31 && position.Y <= Entity.posY * 31 + 21)*/
-                    Entity.Health -= 0;
+            if (position.X >= Entity.posX && position.X <= Entity.posX + 20)
+                if (position.Y >= Entity.posY && position.Y <= Entity.posY + 31)
+                {
+                    Entity.Health -= 5;
+                    return true;
+                }
+
+            return false;
         }
     }
 }
