@@ -41,11 +41,17 @@ namespace Shooter.Entites
             }
             set
             {
-                var form1 = new Form1();
-                form1.makeSmallerPBar(health - value);
-                health = value;
-                if (health <= 0)
+                
+                if (value == 0)
+                {
                     Death = true;
+                    health = value;
+                }
+                else if (health > 0)
+                {
+                    health = value;
+                }
+                
             }
         }
 
@@ -63,8 +69,10 @@ namespace Shooter.Entites
             currentFrame = 0;
             currentLimit = idleFrames;
             flip = 1;
+
             Health = 100;
             Death = false;
+            
         }
 
         public void Move ()
@@ -78,7 +86,7 @@ namespace Shooter.Entites
                 currentFrame++;
             else currentFrame = 0;
 
-            g.DrawImage(spriteSheet, new Rectangle(new Point(posX - flip*size/2, posY), new Size(flip*size, size)), 32 * currentFrame, 32 * currentAnimation, size, size, GraphicsUnit.Pixel);
+            g.DrawImage(spriteSheet, new Rectangle(new Point(posX, posY), new Size(size, size)), 32 * currentFrame, 32 * currentAnimation, size, size, GraphicsUnit.Pixel);
         }
 
         public void SetAnimationConfiguration(int currentAnimation)
@@ -98,6 +106,9 @@ namespace Shooter.Entites
                     break;
                 case 4:
                     currentLimit = deathFrames;
+                    break;
+                case 7:
+                    currentLimit = runFrames;
                     break;
 
             }

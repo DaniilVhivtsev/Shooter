@@ -40,8 +40,8 @@
             this.pBar1.Name = "pBar1";
             this.pBar1.Size = new System.Drawing.Size(426, 23);
             this.pBar1.TabIndex = 0;
+            this.pBar1.Value = 100;
             this.pBar1.Visible = false;
-            this.pBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // label1
             // 
