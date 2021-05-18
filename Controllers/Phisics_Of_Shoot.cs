@@ -89,7 +89,7 @@ namespace Shooter.Controllers
             if (position.X >= Entity.posX && position.X <= Entity.posX + 20)
                 if (position.Y >= Entity.posY && position.Y <= Entity.posY + 31)
                 {
-                    Entity.Health -= 5;
+                    Entity.Health -= 20;
                     return true;
                 }
 
