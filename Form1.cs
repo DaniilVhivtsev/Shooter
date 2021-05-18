@@ -142,15 +142,18 @@ namespace Shooter
 
         public void OnPressMouse(object sender, MouseEventArgs e)
         {
-            switch (e.Button)
+            if (!Entity.Death)
             {
-                case MouseButtons.Left:
-                    player.dirX = 0;
-                    player.dirY = 0;
-                    player.isMoovng = false;
-                    player.isShoot = true;
-                    player.SetAnimationConfiguration(5);
-                    break;
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        player.dirX = 0;
+                        player.dirY = 0;
+                        player.isMoovng = false;
+                        player.isShoot = true;
+                        player.SetAnimationConfiguration(5);
+                        break;
+                }
             }
         }
 
@@ -260,7 +263,7 @@ namespace Shooter
 
             Paint += (sender, args) =>
             {
-                if (!canDoShoot || enemies[indexOfEnemy].Death)
+                if (!canDoShoot || enemies[indexOfEnemy].Death || Entity.Death)
                 {
                     timer.Stop();
                     shootsEnemy.Remove(shoot);
