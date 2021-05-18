@@ -13,6 +13,7 @@ namespace Shooter.Controllers
             for (int i = 0; i < MapController.mapObjects.Count; i++)
             {
                 var currentObject = MapController.mapObjects[i];
+
                 PointF delta = new PointF();
                 delta.X = (Entity.posX + entity.size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
                 delta.Y = (Entity.posY + entity.size / 2) - (currentObject.position.Y + currentObject.size.Height / 2);

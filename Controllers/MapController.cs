@@ -44,7 +44,7 @@ namespace Shooter.Controllers
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
-                {5, 0, 10, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
+                {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7 },
                 {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 10, 0, 0, 0, 7 },
@@ -62,7 +62,7 @@ namespace Shooter.Controllers
                 {
                     if (map[i, j] == 10)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(107, 114)), 202, 298, 107, 114, GraphicsUnit.Pixel);
+                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(107, 114)), 203, 298, 107, 114, GraphicsUnit.Pixel);
                         MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(107, 114));
                         mapObjects.Add(mapEntity);
                     }

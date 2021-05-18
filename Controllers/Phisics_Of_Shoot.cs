@@ -86,9 +86,9 @@ namespace Shooter.Controllers
 
         public void KillHero()
         {
-            if (position.X >= Entity.posX * 31 && position.X <= Entity.posX * 31 + 17)
-                if (position.Y >= Entity.posY * 31 && position.Y <= Entity.posY * 31 + 21)
-                    Entity.Health -= 10;
+            /*if (position.X >= Entity.posX * 31 && position.X <= Entity.posX * 31 + 17)
+                if (position.Y >= Entity.posY * 31 && position.Y <= Entity.posY * 31 + 21)*/
+                    Entity.Health -= 0;
         }
     }
 }

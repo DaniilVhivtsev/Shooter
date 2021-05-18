@@ -42,6 +42,7 @@ namespace Shooter
             helloButton.Click += (sender, args) =>
             {
                 
+
                 this.Controls.Remove(helloButton);
                 timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
@@ -121,7 +122,7 @@ namespace Shooter
                     player.dirX = -2;
                     player.isMoovng = true;
                     player.flip = -1;
-                    player.SetAnimationConfiguration(0);
+                    player.SetAnimationConfiguration(7);
                     break;
                 case Keys.D:
                     player.dirX = 2;
@@ -186,6 +187,7 @@ namespace Shooter
                     Shooting(sender, e);
                 }
             }
+            makeSmallerPBar();
             Invalidate();
         }
 
@@ -237,6 +239,7 @@ namespace Shooter
 
                 if (i == enemies.Count)
                     i = 0;
+                makeSmallerPBar();
             };
             timer.Start();
         }
@@ -273,14 +276,9 @@ namespace Shooter
 
         }
 
-        private void progressBar1_Click(object sender, EventArgs e)
+        public void makeSmallerPBar()
         {
-        }
-
-        public void makeSmallerPBar (int valiable)
-        {
-            if (pBar1.Value - valiable >= 0)
-                pBar1.Value -= valiable;
+            pBar1.Value = Entity.Health;
         }
 
         /*public void Test_makeSmallerPBar()
