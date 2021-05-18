@@ -41,19 +41,19 @@ namespace Shooter.Entites
             }
             set
             {
-                
+
                 if (value == 0)
                 {
                     Death = true;
                     health = value;
                 }
-                else if (health > 0)
+                else if (value > 0)
                 {
                     health = value;
                 }
-                
             }
         }
+        
 
         public Entity(int positionX, int positionY, int idleFrames, int runFrames, int atackFrames, int deathFrames, Image spriteSheet)
         {
@@ -72,25 +72,31 @@ namespace Shooter.Entites
 
             Health = 100;
             Death = false;
-            
         }
 
         public void Move ()
         {
-            posX += dirX;
-            posY += dirY;
+            if (!Death)
+            {
+                posX += dirX;
+                posY += dirY;
+            }
         }
         public void PlayAnimation(Graphics g)
         {
             if (currentFrame < currentLimit - 1)
                 currentFrame++;
-            else currentFrame = 0;
+            else if (!Death) 
+                currentFrame = 0;
 
             g.DrawImage(spriteSheet, new Rectangle(new Point(posX, posY), new Size(size, size)), 32 * currentFrame, 32 * currentAnimation, size, size, GraphicsUnit.Pixel);
         }
 
         public void SetAnimationConfiguration(int currentAnimation)
         {
+            if (Death)
+                currentAnimation = 4;
+            
             this.currentAnimation = currentAnimation;
 
             switch (currentAnimation)
