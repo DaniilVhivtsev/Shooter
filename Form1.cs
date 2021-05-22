@@ -27,7 +27,8 @@ namespace Shooter
         Button StartButton;
         Button CustomizationButton;
 
-        private bool StartPaintGame;
+        public Timer timer1;
+
 
         public Form1()
         {
@@ -60,6 +61,7 @@ namespace Shooter
             {
                 this.Controls.Remove(StartButton);
                 this.Controls.Remove(CustomizationButton);
+                timer1 = new Timer();
                 timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
 
@@ -79,13 +81,10 @@ namespace Shooter
                     this.Controls.Remove(removeForm);
                     startForm();
                     this.OnTabStopChanged(a);
-                    StartPaintGame = false;
                     timer1.Stop();
                     Paint -= StartPaint;
                     return;
                 };
-
-                StartPaintGame = true;
 
                 Paint += StartPaint;
                 
@@ -95,6 +94,8 @@ namespace Shooter
 
                 MouseDown += new MouseEventHandler(OnPressMouse);
                 MouseUp += new MouseEventHandler(OnUpMouse);
+
+
                 Init();
 
                 enemies = new List<Enemy>();
@@ -107,18 +108,13 @@ namespace Shooter
 
                 label1.Visible = true;
                 label1.Text = "Health";
-
-                /*Test_makeSmallerPBar();*/
             };
         }
 
         public void StartPaint(Object e, PaintEventArgs args)
         {
-            if (StartPaintGame)
-            {
-                MapController.DrawMap(args.Graphics);
-                player.PlayAnimation(args.Graphics);
-            }
+            MapController.DrawMap(args.Graphics);
+            player.PlayAnimation(args.Graphics);
         }
 
 
@@ -258,8 +254,9 @@ namespace Shooter
             {
                 if (player.isMoovng)
                     player.Move();
-                if (player.isShoot)
+                if (player.isShoot && player.CanMakeOtherShoot)
                 {
+                    player.CanMakeOtherShoot = false;
                     Shooting(sender, e);
                 }
             }
@@ -269,88 +266,84 @@ namespace Shooter
 
         public void Shooting (object sender, EventArgs args)
         {
-            var timer2 = new Timer();
-            timer2.Interval = 1;
 
             var shoot = new Phisics_Of_Shoot(new Point(Entity.posX, Entity.posY));
             shoots.Add(shoot);
 
-            var canDoShoot = true;
-            timer2.Tick += (e, a) =>
-            {
-                canDoShoot = shoot.MakeShoot();
-            };
+            var x = 0;
+            timer1.Tick += tickShootOfEnemy;
 
-            timer2.Start();
-            
-            Paint += (sender, args) =>
+            Paint += makePaintEnemyShoot;
+
+            player.isShoot = false;
+
+
+            void tickShootOfEnemy (Object e, EventArgs args)
             {
-                if (!canDoShoot)
+                shoot.MakeShoot();
+                if (x == 10)
+                    player.CanMakeOtherShoot = true;
+                x++;
+            }
+
+            void makePaintEnemyShoot (Object e, PaintEventArgs args)
+            {
+                if (!shoot.CanMakeShootHero)
                 {
-                    timer2.Stop();
+                    timer1.Tick -= tickShootOfEnemy;
                     shoots.Remove(shoot);
+                    Paint -= makePaintEnemyShoot;
                 }
                 else
                 {
                     shoot.PlayShoot(args.Graphics);
                 }
-
-            };
-
-            player.isShoot = false;
+            }
         }
 
         public void EnemiesDo()
         {
-            if (!StartPaintGame)
-                return;
-            var timer = new Timer();
-            timer.Interval = 2000;
+
             
             int i = 0;
+            var x = 0;
 
-            timer.Tick += (e, a) =>
+            timer1.Tick += (e, a) =>
             {
-                if (!StartPaintGame)
+                if (x == 30)
                 {
-                    timer.Stop();
-                    return;
-                }
-                MakeShootByEnemy(i);
-                i++;
+                    MakeShootByEnemy(i);
+                    i++;
 
-                if (i == enemies.Count)
-                    i = 0;
-                /*makeSmallerPBar();*/
+                    if (i == enemies.Count)
+                        i = 0;
+                    x = 0;
+                }
+                x++;
             };
-            timer.Start();
         }
 
         public void MakeShootByEnemy(int indexOfEnemy)
         {
-            var timer = new Timer();
-            timer.Interval = 100;
-
             var shoot = new Phisics_Of_Shoot(new Point(enemies[indexOfEnemy].Position.X, enemies[indexOfEnemy].Position.Y), new Point(Entity.posX, Entity.posY));
             shootsEnemy.Add(shoot);
 
-            var canDoShoot = true;
-            timer.Tick += (e, a) =>
+
+            timer1.Tick += (e, a) =>
             {
-                canDoShoot = shoot.MakeShootEnemy();
+                shoot.MakeShootEnemy();
                 makeSmallerPBar();
-                if (!StartPaintGame)
-                {
-                    timer.Stop();
-                    return;
-                }
             };
 
             Paint += (sender, args) =>
             {
-                if (!canDoShoot || enemies[indexOfEnemy].Death || Entity.Death || !StartPaintGame)
+                if (!shoot.CanMakeShootEnemy || enemies[indexOfEnemy].Death || Entity.Death )
                 {
-                    timer.Stop();
+                    timer1.Tick -= (e, a) =>
+                    {
+                        shoot.MakeShootEnemy();
+                        makeSmallerPBar();
+                    };
                     shootsEnemy.Remove(shoot);
                     return;
                 }
@@ -360,28 +353,11 @@ namespace Shooter
                 }
 
             };
-
-            timer.Start();
-
         }
 
         public void makeSmallerPBar()
         {
             pBar1.Value = Entity.Health;
         }
-
-        /*public void Test_makeSmallerPBar()
-        {
-            var timer = new Timer();
-            timer.Interval = 10;
-            timer.Tick += (e, a) =>
-            {
-                makeSmallerPBar(5);
-                if (pBar1.Value == 0) timer.Stop();
-            };
-            timer.Start();
-            
-        }*/
-
     }
 }
