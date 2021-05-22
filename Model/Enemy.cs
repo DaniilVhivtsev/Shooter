@@ -25,6 +25,9 @@ namespace Shooter.Model
             }
         }
 
+        public static int Speed;
+        public static int NumberOfEnemies;
+
         public Point Position;
         public int Size;
         public Image spriteSheetForEnemy;

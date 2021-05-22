@@ -24,35 +24,71 @@ namespace Shooter
         public List<Phisics_Of_Shoot> shoots;
         public List<Phisics_Of_Shoot> shootsEnemy;
 
+        Button StartButton;
+        Button CustomizationButton;
+
+        private bool StartPaintGame;
+
         public Form1()
         {
-            
+
             DoubleBuffered = true;
             InitializeComponent();
 
-            
+            startForm();
 
-            Button helloButton = new Button();
-            helloButton.BackColor = Color.LightGray;
-            helloButton.ForeColor = Color.DarkGray;
-            helloButton.Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2);
-            helloButton.Text = "Привет";
-            this.Controls.Add(helloButton);
+        }
 
-            helloButton.Click += (sender, args) =>
+        public void startForm()
+        {
+            PressStartButton();
+
+            PressCustomizationButton();
+        }
+
+        public void PressStartButton()
+        {
+            StartButton = new Button();
+            StartButton.BackColor = Color.LightGray;
+            StartButton.ForeColor = Color.Black;
+            StartButton.Text = "Начать_играть";
+            StartButton.Size = new Size(100, 30);
+            StartButton.Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2 - StartButton.Size.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2 - StartButton.Size.Height / 2);
+            this.Controls.Add(StartButton);
+
+            StartButton.Click += (sender, args) =>
             {
-                
-
-                this.Controls.Remove(helloButton);
+                this.Controls.Remove(StartButton);
+                this.Controls.Remove(CustomizationButton);
                 timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
 
-
-                Paint += (sender, args) =>
+                Button removeForm = new Button()
                 {
-                    MapController.DrawMap(args.Graphics);
-                    player.PlayAnimation(args.Graphics);
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Вернуть_начальное_состояние формы",
+                    Size = new Size(200, 30),
+                    Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
                 };
+                this.Controls.Add(removeForm);
+
+
+                removeForm.Click += (e, a) =>
+                {
+                    this.Controls.Remove(removeForm);
+                    startForm();
+                    this.OnTabStopChanged(a);
+                    StartPaintGame = false;
+                    timer1.Stop();
+                    Paint -= StartPaint;
+                    return;
+                };
+
+                StartPaintGame = true;
+
+                Paint += StartPaint;
+                
 
                 KeyDown += new KeyEventHandler(OnPress);
                 KeyUp += new KeyEventHandler(OnKeyUp);
@@ -73,6 +109,42 @@ namespace Shooter
                 label1.Text = "Health";
 
                 /*Test_makeSmallerPBar();*/
+            };
+        }
+
+        public void StartPaint(Object e, PaintEventArgs args)
+        {
+            if (StartPaintGame)
+            {
+                MapController.DrawMap(args.Graphics);
+                player.PlayAnimation(args.Graphics);
+            }
+        }
+
+
+        public void PressCustomizationButton()
+        {
+            CustomizationButton = new Button();
+            CustomizationButton.BackColor = Color.LightGray;
+            CustomizationButton.ForeColor = Color.Black;
+            CustomizationButton.Text = "Настройка_игры";
+            CustomizationButton.Size = new Size(100, 30);
+            CustomizationButton.Location = new Point(StartButton.Location.X, StartButton.Location.Y + StartButton.Size.Height + 20);
+            this.Controls.Add(CustomizationButton);
+
+            CustomizationButton.Click += (sender, args) =>
+            {
+                this.Controls.Remove(StartButton);
+                this.Controls.Remove(CustomizationButton);
+                Label speedOfShootButton = new Label()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Скорость_стрельбы_у_противников",
+                    Size = new Size(100, 30),
+                    Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
+                };
+                this.Controls.Add(speedOfShootButton);
             };
         }
 
@@ -181,6 +253,7 @@ namespace Shooter
 
         public void Update(object sender, EventArgs e)
         {
+            
             if (!PhysicsController.isCollide(player, new Point(player.dirX, player.dirY)))
             {
                 if (player.isMoovng)
@@ -229,6 +302,8 @@ namespace Shooter
 
         public void EnemiesDo()
         {
+            if (!StartPaintGame)
+                return;
             var timer = new Timer();
             timer.Interval = 2000;
             
@@ -236,6 +311,11 @@ namespace Shooter
 
             timer.Tick += (e, a) =>
             {
+                if (!StartPaintGame)
+                {
+                    timer.Stop();
+                    return;
+                }
                 MakeShootByEnemy(i);
                 i++;
 
@@ -259,14 +339,20 @@ namespace Shooter
             {
                 canDoShoot = shoot.MakeShootEnemy();
                 makeSmallerPBar();
+                if (!StartPaintGame)
+                {
+                    timer.Stop();
+                    return;
+                }
             };
 
             Paint += (sender, args) =>
             {
-                if (!canDoShoot || enemies[indexOfEnemy].Death || Entity.Death)
+                if (!canDoShoot || enemies[indexOfEnemy].Death || Entity.Death || !StartPaintGame)
                 {
                     timer.Stop();
                     shootsEnemy.Remove(shoot);
+                    return;
                 }
                 else
                 {
