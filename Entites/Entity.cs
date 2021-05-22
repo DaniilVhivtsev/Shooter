@@ -14,6 +14,7 @@ namespace Shooter.Entites
         public int dirY;
         public bool isMoovng;
         public bool isShoot;
+        public bool CanMakeOtherShoot;
 
         public int flip;
 
@@ -72,6 +73,7 @@ namespace Shooter.Entites
 
             Health = 100;
             Death = false;
+            CanMakeOtherShoot = true;
         }
 
         public void Move ()

@@ -18,6 +18,9 @@ namespace Shooter.Controllers
 
         public int countOfStep;
 
+        public bool CanMakeShootHero;
+        public bool CanMakeShootEnemy;
+
         public Phisics_Of_Shoot(Point dir)
         {
             position.X = dir.X - 5;
@@ -29,6 +32,8 @@ namespace Shooter.Controllers
             stepY = (cursorPosition.Y - position.Y) / speed;
 
             countOfStep = 0;
+            CanMakeShootHero = true;
+            CanMakeShootEnemy = true;
         }
 
         public Phisics_Of_Shoot(Point dir, Point person)
@@ -50,14 +55,18 @@ namespace Shooter.Controllers
 /*            g.DrawRectangle(new Pen(Color.Black, 5), Entity.posX * 31, Entity.posY * 31, 17, 21);
 */        }
 
-        public bool MakeShoot()
+        public void MakeShoot()
         {
-            if (countOfStep == 10) return false;
+            if (countOfStep == 10)
+            {
+                CanMakeShootHero = false;
+                return;
+            }
             countOfStep++;
             position.X += stepX;
             position.Y += stepY;
             KillEnemy();
-            return true;
+            CanMakeShootHero = true;
         }
 
         public void KillEnemy()
@@ -73,27 +82,32 @@ namespace Shooter.Controllers
             }
         }
 
-        public bool MakeShootEnemy()
+        public void MakeShootEnemy()
         {
-            if (countOfStep == 10) return false;
+            if (countOfStep == 10)
+            {
+                CanMakeShootEnemy = false;
+                return;
+            }
 
             countOfStep++;
             position.X += stepX;
             position.Y += stepY;
 
-            return !KillHero();
+            KillHero();
         }
 
-        public bool KillHero()
+        public void KillHero()
         {
             if (position.X >= Entity.posX && position.X <= Entity.posX + 20)
                 if (position.Y >= Entity.posY && position.Y <= Entity.posY + 31)
                 {
                     Entity.Health -= 20;
-                    return true;
+                    CanMakeShootEnemy = false;
+                    return;
                 }
 
-            return false;
+            CanMakeShootEnemy = true;
         }
     }
 }
