@@ -42,7 +42,7 @@ namespace Shooter.Controllers
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
-                {5, 10, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
+                {5, 10, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
@@ -52,7 +52,7 @@ namespace Shooter.Controllers
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
-                {5, 10, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
+                {5, 10, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 7 },
                 {5, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 7 },
@@ -96,15 +96,20 @@ namespace Shooter.Controllers
 
         public static void MakeEnemies()
         {
+            var numberOfEnemies = 0;
             for (int i = 0; i < mapWidth; i++)
                 for (int j = 0; j < mapHeight; j++)
                 {
                     if (map[i, j] == 100)
                     {
-                        /*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*/
-                        var enemyObject = new Enemy(new Point(j, i), 31, 100);
-                        /*enemyObject.DrawEnemy(g);*/
-                        enemies.Add(enemyObject);
+                        if (numberOfEnemies < Game.numberOfEnemiesNumericNumber)
+                        {
+                            /*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*/
+                            var enemyObject = new Enemy(new Point(j, i), 31, 100);
+                            /*enemyObject.DrawEnemy(g);*/
+                            enemies.Add(enemyObject);
+                            numberOfEnemies++;
+                        }
                     }
                 }
         }
