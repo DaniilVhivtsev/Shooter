@@ -16,14 +16,6 @@ namespace Shooter
 {
     public partial class Form1 : Form
     {
-        public Image dwarfSheet;
-        public Entity player;
-
-        private List<Enemy> enemies;
-
-        public List<Phisics_Of_Shoot> shoots;
-        public List<Phisics_Of_Shoot> shootsEnemy;
-
         Button StartButton;
         Button CustomizationButton;
 
@@ -49,13 +41,7 @@ namespace Shooter
 
         public void PressStartButton()
         {
-            StartButton = new Button();
-            StartButton.BackColor = Color.LightGray;
-            StartButton.ForeColor = Color.Black;
-            StartButton.Text = "Начать_играть";
-            StartButton.Size = new Size(100, 30);
-            StartButton.Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2 - StartButton.Size.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2 - StartButton.Size.Height / 2);
-            this.Controls.Add(StartButton);
+            StartButtoninstructions();
 
             StartButton.Click += (sender, args) =>
             {
@@ -65,56 +51,69 @@ namespace Shooter
                 timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
 
-                Button removeForm = new Button()
-                {
-                    BackColor = Color.LightGray,
-                    ForeColor = Color.Black,
-                    Text = "Вернуть_начальное_состояние формы",
-                    Size = new Size(200, 30),
-                    Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
-                };
-                this.Controls.Add(removeForm);
+                RemoveButtonInstructions();
 
+                Paint += Game.StartPaint;
 
-                removeForm.Click += (e, a) =>
-                {
-                    this.Controls.Remove(removeForm);
-                    startForm();
-                    this.OnTabStopChanged(a);
-                    timer1.Stop();
-                    Paint -= StartPaint;
-                    return;
-                };
+                ButtonForGameInstructions();
 
-                Paint += StartPaint;
-                
-
-                KeyDown += new KeyEventHandler(OnPress);
-                KeyUp += new KeyEventHandler(OnKeyUp);
-
-                MouseDown += new MouseEventHandler(OnPressMouse);
-                MouseUp += new MouseEventHandler(OnUpMouse);
-
-
-                Init();
-
-                enemies = new List<Enemy>();
-                enemies = MapController.enemies;
-
+                Game.Init();
+                timer1.Start();
                 EnemiesDo();
 
-                pBar1.Visible = true;
-                pBar1.Value = 100;
-
-                label1.Visible = true;
-                label1.Text = "Health";
+                pBarInstructions();
             };
         }
 
-        public void StartPaint(Object e, PaintEventArgs args)
+        private void pBarInstructions()
         {
-            MapController.DrawMap(args.Graphics);
-            player.PlayAnimation(args.Graphics);
+            pBar1.Visible = true;
+            pBar1.Value = 100;
+
+            label1.Visible = true;
+            label1.Text = "Health";
+        }
+
+        private void ButtonForGameInstructions()
+        {
+            KeyDown += new KeyEventHandler(Game.OnPress);
+            KeyUp += new KeyEventHandler(Game.OnKeyUp);
+            MouseDown += new MouseEventHandler(Game.OnMousePress);
+            MouseUp += new MouseEventHandler(Game.OnMouseUp);
+        }
+
+        private void RemoveButtonInstructions()
+        {
+            Button removeForm = new Button()
+            {
+                BackColor = Color.LightGray,
+                ForeColor = Color.Black,
+                Text = "Вернуть_начальное_состояние формы",
+                Size = new Size(200, 30),
+                Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
+            };
+            this.Controls.Add(removeForm);
+
+            removeForm.Click += (e, a) =>
+            {
+                this.Controls.Remove(removeForm);
+                startForm();
+                this.OnTabStopChanged(a);
+                timer1.Stop();
+                Paint -= Game.StartPaint;
+                return;
+            };
+        }
+
+        private void StartButtoninstructions()
+        {
+            StartButton = new Button();
+            StartButton.BackColor = Color.LightGray;
+            StartButton.ForeColor = Color.Black;
+            StartButton.Text = "Начать_играть";
+            StartButton.Size = new Size(100, 30);
+            StartButton.Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2 - StartButton.Size.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2 - StartButton.Size.Height / 2);
+            this.Controls.Add(StartButton);
         }
 
 
@@ -132,157 +131,177 @@ namespace Shooter
             {
                 this.Controls.Remove(StartButton);
                 this.Controls.Remove(CustomizationButton);
-                Label speedOfShootButton = new Label()
+                Label speedOfShootButtonHero = new Label()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Скорость_стрельбы_у_героя",
+                    Size = new Size(100, 30),
+                    Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
+                };
+                this.Controls.Add(speedOfShootButtonHero);
+
+                NumericUpDown speedOfShootButtonHeroNumeric = new NumericUpDown()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Size = new Size(100, 30),
+                    Location = new Point(speedOfShootButtonHero.Location.X + speedOfShootButtonHero.Width + 10, speedOfShootButtonHero.Location.Y),
+                    Value = Game.speedOfShootButtonHeroNumericNumber,
+                    Maximum = 10,
+                    Minimum = 0
+                };
+                this.Controls.Add(speedOfShootButtonHeroNumeric);
+                speedOfShootButtonHeroNumeric.ValueChanged += (e, a) =>
+                {
+                    Game.speedOfShootButtonHeroNumericNumber = int.Parse(speedOfShootButtonHeroNumeric.Value.ToString());
+                };
+
+                Label speedOfShootButtonEnemy = new Label()
                 {
                     BackColor = Color.LightGray,
                     ForeColor = Color.Black,
                     Text = "Скорость_стрельбы_у_противников",
                     Size = new Size(100, 30),
-                    Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
+                    Location = new Point(speedOfShootButtonHero.Location.X, speedOfShootButtonHero.Location.Y + speedOfShootButtonHero.Height + 20)
                 };
-                this.Controls.Add(speedOfShootButton);
-            };
-        }
+                this.Controls.Add(speedOfShootButtonEnemy);
 
-
-        public void OnKeyUp (object sender, KeyEventArgs e)
-        {
-
-            switch (e.KeyCode)
-            {
-                case Keys.W:
-                    player.dirY = 0;
-                    break;
-                case Keys.S:
-                    player.dirY = 0;
-                    break;
-                case Keys.A:
-                    player.dirX = 0;
-                    break;
-                case Keys.D:
-                    player.dirX = 0;
-                    break;
-            }
-
-            if (player.dirX == 0 && player.dirY == 0)
-            {
-                player.isMoovng = false;
-                player.isShoot = false;
-                player.SetAnimationConfiguration(2);
-            }
-        }
-
-        public void OnPress(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.W:
-                    player.dirY = -2;
-                    player.isMoovng = true;
-                    player.SetAnimationConfiguration(0);
-                    break;
-                case Keys.S:
-                    player.dirY = 2;
-                    player.isMoovng = true;
-                    player.SetAnimationConfiguration(0);
-                    break;
-                case Keys.A:
-                    player.dirX = -2;
-                    player.isMoovng = true;
-                    player.flip = -1;
-                    player.SetAnimationConfiguration(7);
-                    break;
-                case Keys.D:
-                    player.dirX = 2;
-                    player.isMoovng = true;
-                    player.flip = 1;
-                    player.SetAnimationConfiguration(0);
-                    break;
-                /*case Keys.Space:
-                    player.dirX = 0;
-                    player.dirY = 0;
-                    player.isMoovng = false;
-                    player.isShoot = true;
-                    player.SetAnimationConfiguration(5);
-                    break;*/
-            }
-        }
-
-        public void OnPressMouse(object sender, MouseEventArgs e)
-        {
-            if (!Entity.Death)
-            {
-                switch (e.Button)
+                NumericUpDown speedOfShootButtonEnemyNumeric = new NumericUpDown()
                 {
-                    case MouseButtons.Left:
-                        player.dirX = 0;
-                        player.dirY = 0;
-                        player.isMoovng = false;
-                        player.isShoot = true;
-                        player.SetAnimationConfiguration(5);
-                        break;
-                }
-            }
-        }
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Size = new Size(100, 30),
+                    Location = new Point(speedOfShootButtonEnemy.Location.X + speedOfShootButtonEnemy.Width + 10, speedOfShootButtonEnemy.Location.Y),
+                    Value = Game.speedOfShootButtonEnemyNumericNumber,
+                    Maximum = 10,
+                    Minimum = 0
+                };
+                this.Controls.Add(speedOfShootButtonEnemyNumeric);
+                speedOfShootButtonEnemyNumeric.ValueChanged += (e, a) =>
+                {
+                    Game.speedOfShootButtonEnemyNumericNumber = int.Parse(speedOfShootButtonEnemyNumeric.Value.ToString());
+                };
 
-        public void OnUpMouse (object ender, MouseEventArgs e)
-        {
-            player.SetAnimationConfiguration(2);
-        }
 
-        public void Init()
-        {
-            MapController.Init();
+                Label numberOfEnemies = new Label()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Количество" + " " +"противников",
+                    Size = new Size(100, 30),
+                    Location = new Point(speedOfShootButtonHero.Location.X, speedOfShootButtonEnemy.Location.Y + speedOfShootButtonEnemy.Height + 20)
+                };
+                this.Controls.Add(numberOfEnemies);
 
-            this.Width = MapController.GetWidth();
-            this.Height = MapController.GetHeight();
+                NumericUpDown numberOfEnemiesNumeric = new NumericUpDown()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Size = new Size(100, 30),
+                    Location = new Point(numberOfEnemies.Location.X + numberOfEnemies.Width + 10, numberOfEnemies.Location.Y),
+                    Value = Game.numberOfEnemiesNumericNumber,
+                    Maximum = 5,
+                    Minimum = 0
+                };
+                this.Controls.Add(numberOfEnemiesNumeric);
+                numberOfEnemiesNumeric.ValueChanged += (e, a) =>
+                {
+                    Game.numberOfEnemiesNumericNumber = int.Parse(numberOfEnemiesNumeric.Value.ToString());
+                };
 
-            dwarfSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
+                Label speedOfEnemy = new Label()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Скорость передвижения противников",
+                    Size = new Size(100, 30),
+                    Location = new Point(speedOfShootButtonHero.Location.X, numberOfEnemies.Location.Y + numberOfEnemies.Height + 20)
+                };
+                this.Controls.Add(speedOfEnemy);
 
-            player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
+                NumericUpDown speedOfEnemyNumeric = new NumericUpDown()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Size = new Size(100, 30),
+                    Location = new Point(speedOfEnemy.Location.X + speedOfEnemy.Width + 10, speedOfEnemy.Location.Y),
+                    Value = Game.speedOfEnemyNumericNumber,
+                    Maximum = 10,
+                    Minimum = 0
+                };
+                this.Controls.Add(speedOfEnemyNumeric);
+                speedOfEnemyNumeric.ValueChanged += (e, a) =>
+                {
+                    Game.speedOfEnemyNumericNumber = int.Parse(speedOfEnemyNumeric.Value.ToString());
+                };
 
-            shoots = new List<Phisics_Of_Shoot>();
-            shootsEnemy = new List<Phisics_Of_Shoot>();
+                Button removeForm = new Button()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Вернуть_начальное_состояние формы",
+                    Size = new Size(200, 30),
+                    Location = new Point(speedOfShootButtonHero.Location.X, speedOfEnemy.Location.Y + speedOfEnemy.Height + 20)
+                };
+                this.Controls.Add(removeForm);
 
-            timer1.Start();
-        }
+                removeForm.Click += (e, a) =>
+                {
+                    this.Controls.Remove(removeForm);
+                    this.Controls.Remove(speedOfShootButtonHero);
+                    this.Controls.Remove(speedOfShootButtonEnemy);
+                    this.Controls.Remove(numberOfEnemies);
+                    this.Controls.Remove(speedOfEnemy);
+
+                    this.Controls.Remove(speedOfShootButtonHeroNumeric);
+                    this.Controls.Remove(speedOfShootButtonEnemyNumeric);
+                    this.Controls.Remove(numberOfEnemiesNumeric);
+                    this.Controls.Remove(speedOfEnemyNumeric);
+
+                    startForm();
+                    this.OnTabStopChanged(a);
+                    return;
+                };
+
+            };
+        }      
 
         public void Update(object sender, EventArgs e)
         {
-            
-            if (!PhysicsController.isCollide(player, new Point(player.dirX, player.dirY)))
+
+            if (!PhysicsController.isCollide(Game.player, new Point(Game.player.dirX, Game.player.dirY)))
             {
-                if (player.isMoovng)
-                    player.Move();
-                if (player.isShoot && player.CanMakeOtherShoot)
+                if (Game.player.isMoovng)
+                    Game.player.Move();
+                if (Game.player.isShoot && Game.player.CanMakeOtherShoot)
                 {
-                    player.CanMakeOtherShoot = false;
+                    Game.player.CanMakeOtherShoot = false;
                     Shooting(sender, e);
                 }
             }
             makeSmallerPBar();
             Invalidate();
         }
-
         public void Shooting (object sender, EventArgs args)
         {
 
             var shoot = new Phisics_Of_Shoot(new Point(Entity.posX, Entity.posY));
-            shoots.Add(shoot);
+            Game.shoots.Add(shoot);
 
             var x = 0;
             timer1.Tick += tickShootOfEnemy;
 
             Paint += makePaintEnemyShoot;
 
-            player.isShoot = false;
+            Game.player.isShoot = false;
 
 
             void tickShootOfEnemy (Object e, EventArgs args)
             {
                 shoot.MakeShoot();
                 if (x == 10)
-                    player.CanMakeOtherShoot = true;
+                    Game.player.CanMakeOtherShoot = true;
                 x++;
             }
 
@@ -291,7 +310,7 @@ namespace Shooter
                 if (!shoot.CanMakeShootHero)
                 {
                     timer1.Tick -= tickShootOfEnemy;
-                    shoots.Remove(shoot);
+                    Game.shoots.Remove(shoot);
                     Paint -= makePaintEnemyShoot;
                 }
                 else
@@ -302,20 +321,18 @@ namespace Shooter
         }
 
         public void EnemiesDo()
-        {
-
-            
+        { 
             int i = 0;
             var x = 0;
 
             timer1.Tick += (e, a) =>
             {
-                if (x == 30)
+                if (x == 30 && Game.numberOfEnemiesNumericNumber != 0)
                 {
                     MakeShootByEnemy(i);
                     i++;
 
-                    if (i == enemies.Count)
+                    if (i == Game.numberOfEnemiesNumericNumber)
                         i = 0;
                     x = 0;
                 }
@@ -325,8 +342,8 @@ namespace Shooter
 
         public void MakeShootByEnemy(int indexOfEnemy)
         {
-            var shoot = new Phisics_Of_Shoot(new Point(enemies[indexOfEnemy].Position.X, enemies[indexOfEnemy].Position.Y), new Point(Entity.posX, Entity.posY));
-            shootsEnemy.Add(shoot);
+            var shoot = new Phisics_Of_Shoot(new Point(Game.enemies[indexOfEnemy].Position.X, Game.enemies[indexOfEnemy].Position.Y), new Point(Entity.posX, Entity.posY));
+            Game.shootsEnemy.Add(shoot);
 
 
             timer1.Tick += (e, a) =>
@@ -337,14 +354,14 @@ namespace Shooter
 
             Paint += (sender, args) =>
             {
-                if (!shoot.CanMakeShootEnemy || enemies[indexOfEnemy].Death || Entity.Death )
+                if (!shoot.CanMakeShootEnemy || Game.enemies[indexOfEnemy].Death || Entity.Death )
                 {
                     timer1.Tick -= (e, a) =>
                     {
                         shoot.MakeShootEnemy();
                         makeSmallerPBar();
                     };
-                    shootsEnemy.Remove(shoot);
+                    Game.shootsEnemy.Remove(shoot);
                     return;
                 }
                 else
