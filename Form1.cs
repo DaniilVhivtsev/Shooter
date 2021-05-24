@@ -135,7 +135,7 @@ namespace Shooter
                 {
                     BackColor = Color.LightGray,
                     ForeColor = Color.Black,
-                    Text = "Скорость_стрельбы_у_героя",
+                    Text = "Скорость стрельбы у героя",
                     Size = new Size(100, 30),
                     Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
                 };
@@ -161,7 +161,7 @@ namespace Shooter
                 {
                     BackColor = Color.LightGray,
                     ForeColor = Color.Black,
-                    Text = "Скорость_стрельбы_у_противников",
+                    Text = "Скорость стрельбы у противников",
                     Size = new Size(100, 30),
                     Location = new Point(speedOfShootButtonHero.Location.X, speedOfShootButtonHero.Location.Y + speedOfShootButtonHero.Height + 20)
                 };
@@ -236,13 +236,66 @@ namespace Shooter
                     Game.speedOfEnemyNumericNumber = int.Parse(speedOfEnemyNumeric.Value.ToString());
                 };
 
+
+                Label enemyDamage = new Label()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Урон от противника",
+                    Size = new Size(100, 30),
+                    Location = new Point(speedOfShootButtonHero.Location.X, speedOfEnemy.Location.Y + speedOfEnemy.Height + 20)
+                };
+                this.Controls.Add(enemyDamage);
+
+                NumericUpDown enemyDamageNumeric = new NumericUpDown()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Size = new Size(100, 30),
+                    Location = new Point(enemyDamage.Location.X + enemyDamage.Width + 10, enemyDamage.Location.Y),
+                    Value = Game.enemyDamageNumericNumber,
+                    Maximum = 10,
+                    Minimum = 0
+                };
+                this.Controls.Add(enemyDamageNumeric);
+                enemyDamageNumeric.ValueChanged += (e, a) =>
+                {
+                    Game.enemyDamageNumericNumber = int.Parse(enemyDamageNumeric.Value.ToString());
+                };
+
+                Label heroDamage = new Label()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Урон от героя",
+                    Size = new Size(100, 30),
+                    Location = new Point(enemyDamage.Location.X, enemyDamage.Location.Y + enemyDamage.Height + 20)
+                };
+                this.Controls.Add(heroDamage);
+
+                NumericUpDown heroDamageNumeric = new NumericUpDown()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Size = new Size(100, 30),
+                    Location = new Point(heroDamage.Location.X + heroDamage.Width + 10, heroDamage.Location.Y),
+                    Value = Game.heroDamageNumericNumber,
+                    Maximum = 10,
+                    Minimum = 0
+                };
+                this.Controls.Add(heroDamageNumeric);
+                heroDamageNumeric.ValueChanged += (e, a) =>
+                {
+                    Game.heroDamageNumericNumber = int.Parse(heroDamageNumeric.Value.ToString());
+                };
+
                 Button removeForm = new Button()
                 {
                     BackColor = Color.LightGray,
                     ForeColor = Color.Black,
                     Text = "Вернуть_начальное_состояние формы",
                     Size = new Size(200, 30),
-                    Location = new Point(speedOfShootButtonHero.Location.X, speedOfEnemy.Location.Y + speedOfEnemy.Height + 20)
+                    Location = new Point(heroDamage.Location.X, heroDamage.Location.Y + heroDamage.Height + 20)
                 };
                 this.Controls.Add(removeForm);
 
@@ -253,11 +306,15 @@ namespace Shooter
                     this.Controls.Remove(speedOfShootButtonEnemy);
                     this.Controls.Remove(numberOfEnemies);
                     this.Controls.Remove(speedOfEnemy);
+                    this.Controls.Remove(enemyDamage);
+                    this.Controls.Remove(heroDamage);
 
                     this.Controls.Remove(speedOfShootButtonHeroNumeric);
                     this.Controls.Remove(speedOfShootButtonEnemyNumeric);
                     this.Controls.Remove(numberOfEnemiesNumeric);
                     this.Controls.Remove(speedOfEnemyNumeric);
+                    this.Controls.Remove(enemyDamageNumeric);
+                    this.Controls.Remove(heroDamageNumeric);
 
                     startForm();
                     this.OnTabStopChanged(a);
@@ -330,8 +387,8 @@ namespace Shooter
                 if (x == 30 && Game.numberOfEnemiesNumericNumber != 0)
                 {
                     MakeShootByEnemy(i);
+                    MoveEnemy(i);
                     i++;
-
                     if (i == Game.numberOfEnemiesNumericNumber)
                         i = 0;
                     x = 0;
@@ -360,18 +417,33 @@ namespace Shooter
                     {
                         shoot.MakeShootEnemy();
                         makeSmallerPBar();
+                        
                     };
                     Game.shootsEnemy.Remove(shoot);
                     return;
                 }
                 else
                 {
+                    
                     shoot.PlayShoot(args.Graphics);
                 }
 
             };
         }
 
+        public void MoveEnemy(int index)
+        {
+            var i = 0;
+            timer1.Tick += (e, a) =>
+            {
+                if (i == 10)
+                {
+                    Game.enemies[index].EnemyMovement(new Point(Entity.posX, Entity.posY));
+                    i = 0;
+                }
+                else i++;
+            };
+        }
         public void makeSmallerPBar()
         {
             pBar1.Value = Entity.Health;
