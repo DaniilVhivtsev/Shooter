@@ -436,7 +436,7 @@ namespace Shooter
             var i = 0;
             timer1.Tick += (e, a) =>
             {
-                if (i == 10)
+                if (i == 10 && !Game.enemies[index].Death)
                 {
                     Game.enemies[index].EnemyMovement(new Point(Entity.posX, Entity.posY));
                     i = 0;
