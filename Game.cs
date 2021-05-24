@@ -33,11 +33,17 @@ namespace Shooter
         {
             get; set;
         }
-        public static int numberOfEnemiesNumericNumber
+        public static int numberOfEnemiesNumericNumber = 2;
+
+        public static int speedOfEnemyNumericNumber
         {
             get; set;
         }
-        public static int speedOfEnemyNumericNumber
+        public static int enemyDamageNumericNumber
+        {
+            get; set;
+        }
+        public static int heroDamageNumericNumber
         {
             get; set;
         }
