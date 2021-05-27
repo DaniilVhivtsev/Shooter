@@ -51,7 +51,7 @@ namespace Shooter
                 timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
 
-                RemoveButtonInstructions();
+                RemoveButtonFromGame();
 
                 Paint += Game.StartPaint;
 
@@ -93,7 +93,7 @@ namespace Shooter
             MouseUp += new MouseEventHandler(Game.OnMouseUp);
         }
 
-        private void RemoveButtonInstructions()
+        private void RemoveButtonFromGame()
         {
             Button removeForm = new Button()
             {
@@ -107,6 +107,7 @@ namespace Shooter
 
             removeForm.Click += (e, a) =>
             {
+                JsonDataActivities.MakeJsonFile(new Person { Name = "Daniil", Score = Game.Score});
                 this.Controls.Remove(removeForm);
                 startForm();
                 this.OnTabStopChanged(a);
