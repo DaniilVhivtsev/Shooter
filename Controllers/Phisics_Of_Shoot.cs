@@ -78,8 +78,14 @@ namespace Shooter.Controllers
 
                 if (position.X >= enemy.Position.X  && position.X <= enemy.Position.X + 17)
                     if (position.Y >= enemy.Position.Y && position.Y <= enemy.Position.Y + 21)
-                        enemy.Health -= 100;
-
+                    {
+                        enemy.Health -= Game.heroDamageNumericNumber;
+                        if (Game.heroDamageNumericNumber < 20)
+                            Game.Score += Game.heroDamageNumericNumber * 3;
+                        else if (Game.heroDamageNumericNumber < 30)
+                            Game.Score += Game.heroDamageNumericNumber * 2;
+                        else Game.Score += Game.heroDamageNumericNumber;
+                    }
             }
         }
 
@@ -103,7 +109,14 @@ namespace Shooter.Controllers
             if (position.X >= Entity.posX && position.X <= Entity.posX + 20)
                 if (position.Y >= Entity.posY && position.Y <= Entity.posY + 31)
                 {
-                    Entity.Health -= 20;
+                    Entity.Health -= Game.enemyDamageNumericNumber;
+
+                    if (Game.enemyDamageNumericNumber >= 50)
+                        Game.Score -= Game.enemyDamageNumericNumber / 2;
+                    else if (Game.enemyDamageNumericNumber >= 35)
+                        Game.Score -= Game.enemyDamageNumericNumber / 3;
+                    else Game.Score -= Game.enemyDamageNumericNumber;
+
                     CanMakeShootEnemy = false;
                     return;
                 }

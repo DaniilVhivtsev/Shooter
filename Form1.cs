@@ -62,6 +62,7 @@ namespace Shooter
                 EnemiesDo();
 
                 pBarInstructions();
+                labelsScoreInstructions();
             };
         }
 
@@ -74,6 +75,16 @@ namespace Shooter
             label1.Text = "Health";
         }
 
+        private void labelsScoreInstructions()
+        {
+            labelScore.Text = "Score:";
+            labelScoreNumber.Text = Game.Score.ToString();
+
+            labelScore.Visible = true;
+            labelScoreNumber.Visible = true;
+
+            timer1.Tick += UpdateScore;
+        }
         private void ButtonForGameInstructions()
         {
             KeyDown += new KeyEventHandler(Game.OnPress);
@@ -101,6 +112,11 @@ namespace Shooter
                 this.OnTabStopChanged(a);
                 timer1.Stop();
                 Paint -= Game.StartPaint;
+                pBar1.Visible = false;
+                label1.Visible = false;
+                labelScore.Visible = false;
+                labelScoreNumber.Visible = false;
+                Game.Score = 0;
                 return;
             };
         }
@@ -254,7 +270,7 @@ namespace Shooter
                     Size = new Size(100, 30),
                     Location = new Point(enemyDamage.Location.X + enemyDamage.Width + 10, enemyDamage.Location.Y),
                     Value = Game.enemyDamageNumericNumber,
-                    Maximum = 10,
+                    Maximum = 50,
                     Minimum = 0
                 };
                 this.Controls.Add(enemyDamageNumeric);
@@ -280,7 +296,7 @@ namespace Shooter
                     Size = new Size(100, 30),
                     Location = new Point(heroDamage.Location.X + heroDamage.Width + 10, heroDamage.Location.Y),
                     Value = Game.heroDamageNumericNumber,
-                    Maximum = 10,
+                    Maximum = 100,
                     Minimum = 0
                 };
                 this.Controls.Add(heroDamageNumeric);
@@ -443,6 +459,10 @@ namespace Shooter
         public void makeSmallerPBar()
         {
             pBar1.Value = Entity.Health;
+        }
+        public void UpdateScore(object sender, EventArgs e)
+        {
+            labelScoreNumber.Text = Game.Score.ToString();
         }
     }
 }

@@ -30,6 +30,8 @@
         {
             this.pBar1 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelScore = new System.Windows.Forms.Label();
+            this.labelScoreNumber = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // pBar1
@@ -51,11 +53,33 @@
             this.label1.Text = "label1";
             this.label1.Visible = false;
             // 
+            // labelScore
+            // 
+            this.labelScore.AutoSize = true;
+            this.labelScore.Location = new System.Drawing.Point(551, 25);
+            this.labelScore.Name = "labelScore";
+            this.labelScore.Size = new System.Drawing.Size(56, 13);
+            this.labelScore.TabIndex = 2;
+            this.labelScore.Text = "labelScore";
+            this.labelScore.Visible = false;
+            // 
+            // labelScoreNumber
+            // 
+            this.labelScoreNumber.AutoSize = true;
+            this.labelScoreNumber.Location = new System.Drawing.Point(613, 25);
+            this.labelScoreNumber.Name = "labelScoreNumber";
+            this.labelScoreNumber.Size = new System.Drawing.Size(93, 13);
+            this.labelScoreNumber.TabIndex = 3;
+            this.labelScoreNumber.Text = "labelScoreNumber";
+            this.labelScoreNumber.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelScoreNumber);
+            this.Controls.Add(this.labelScore);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pBar1);
             this.DoubleBuffered = true;
@@ -70,6 +94,8 @@
         #endregion
         private System.Windows.Forms.ProgressBar pBar1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelScore;
+        private System.Windows.Forms.Label labelScoreNumber;
     }
 }
 
