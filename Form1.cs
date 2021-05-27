@@ -403,22 +403,13 @@ namespace Shooter
             Game.shootsEnemy.Add(shoot);
 
 
-            timer1.Tick += (e, a) =>
-            {
-                shoot.MakeShootEnemy();
-                makeSmallerPBar();
-            };
+            timer1.Tick += TickOfShootByEnemy;
 
             Paint += (sender, args) =>
             {
                 if (!shoot.CanMakeShootEnemy || Game.enemies[indexOfEnemy].Death || Entity.Death )
                 {
-                    timer1.Tick -= (e, a) =>
-                    {
-                        shoot.MakeShootEnemy();
-                        makeSmallerPBar();
-                        
-                    };
+                    timer1.Tick -= TickOfShootByEnemy;
                     Game.shootsEnemy.Remove(shoot);
                     return;
                 }
@@ -427,8 +418,13 @@ namespace Shooter
                     
                     shoot.PlayShoot(args.Graphics);
                 }
-
             };
+
+            void TickOfShootByEnemy(Object e, EventArgs args)
+            {
+                shoot.MakeShootEnemy();
+                makeSmallerPBar();
+            }
         }
 
         public void MoveEnemy(int index)
@@ -436,7 +432,7 @@ namespace Shooter
             var i = 0;
             timer1.Tick += (e, a) =>
             {
-                if (i == 10 && !Game.enemies[index].Death)
+                if (i == 10 && !Game.enemies[index].Death && !Entity.Death)
                 {
                     Game.enemies[index].EnemyMovement(new Point(Entity.posX, Entity.posY));
                     i = 0;

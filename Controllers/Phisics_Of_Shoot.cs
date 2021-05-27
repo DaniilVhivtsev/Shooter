@@ -33,7 +33,7 @@ namespace Shooter.Controllers
 
             countOfStep = 0;
             CanMakeShootHero = true;
-            CanMakeShootEnemy = true;
+            
         }
 
         public Phisics_Of_Shoot(Point dir, Point person)
@@ -45,6 +45,7 @@ namespace Shooter.Controllers
             stepY = (person.Y + 14 - position.Y) / speed;
 
             countOfStep = 0;
+            CanMakeShootEnemy = true;
         }
 
         public void PlayShoot (Graphics g)
@@ -77,7 +78,7 @@ namespace Shooter.Controllers
 
                 if (position.X >= enemy.Position.X  && position.X <= enemy.Position.X + 17)
                     if (position.Y >= enemy.Position.Y && position.Y <= enemy.Position.Y + 21)
-                        enemy.Health -= 10;
+                        enemy.Health -= 100;
 
             }
         }
