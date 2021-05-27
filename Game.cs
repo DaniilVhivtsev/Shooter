@@ -12,11 +12,6 @@ namespace Shooter
 {
     public static class Game
     {
-        public static int Score
-        {
-            get; set;
-        }
-
         public static Image dwarfSheet;
         public static Entity player;
 
@@ -39,14 +34,10 @@ namespace Shooter
         {
             get; set;
         }
-        public static int enemyDamageNumericNumber
-        {
-            get; set;
-        }
-        public static int heroDamageNumericNumber
-        {
-            get; set;
-        }
+        public static int enemyDamageNumericNumber = 10;
+        public static int heroDamageNumericNumber = 25;
+
+        public static int Score = 0;
 
         public static void StartPaint(Object e, PaintEventArgs args)
         {
