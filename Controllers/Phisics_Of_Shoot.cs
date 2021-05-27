@@ -80,11 +80,14 @@ namespace Shooter.Controllers
                     if (position.Y >= enemy.Position.Y && position.Y <= enemy.Position.Y + 21)
                     {
                         enemy.Health -= Game.heroDamageNumericNumber;
-                        if (Game.heroDamageNumericNumber < 20)
-                            Game.Score += Game.heroDamageNumericNumber * 3;
-                        else if (Game.heroDamageNumericNumber < 30)
-                            Game.Score += Game.heroDamageNumericNumber * 2;
-                        else Game.Score += Game.heroDamageNumericNumber;
+                        if (!enemy.Death)
+                        {
+                            if (Game.heroDamageNumericNumber < 20)
+                                Game.Score += Game.heroDamageNumericNumber * 3;
+                            else if (Game.heroDamageNumericNumber < 30)
+                                Game.Score += Game.heroDamageNumericNumber * 2;
+                            else Game.Score += Game.heroDamageNumericNumber;
+                        }
                     }
             }
         }

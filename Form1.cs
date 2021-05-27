@@ -63,9 +63,10 @@ namespace Shooter
 
                 pBarInstructions();
                 labelsScoreInstructions();
+                PlayerNameLabelTextBox();
+                buttonNameConfirmation.Visible = true;
             };
         }
-
         private void pBarInstructions()
         {
             pBar1.Visible = true;
@@ -74,7 +75,6 @@ namespace Shooter
             label1.Visible = true;
             label1.Text = "Health";
         }
-
         private void labelsScoreInstructions()
         {
             labelScore.Text = "Score:";
@@ -84,6 +84,12 @@ namespace Shooter
             labelScoreNumber.Visible = true;
 
             timer1.Tick += UpdateScore;
+        }
+        private void PlayerNameLabelTextBox()
+        {
+            labelPlayerName.Visible = true;
+            textBoxPlayerName.Visible = true;
+            labelPlayerName.Text = "Ваш ник: ";
         }
         private void ButtonForGameInstructions()
         {
@@ -107,7 +113,7 @@ namespace Shooter
 
             removeForm.Click += (e, a) =>
             {
-                JsonDataActivities.MakeJsonFile(new Person { Name = "Daniil", Score = Game.Score});
+                JsonDataActivities.MakeJsonFile(new Person { Name = textBoxPlayerName.Text, Score = Game.Score});
                 this.Controls.Remove(removeForm);
                 startForm();
                 this.OnTabStopChanged(a);
@@ -117,6 +123,9 @@ namespace Shooter
                 label1.Visible = false;
                 labelScore.Visible = false;
                 labelScoreNumber.Visible = false;
+                labelPlayerName.Visible = false;
+                textBoxPlayerName.Visible = false;
+                buttonNameConfirmation.Visible = false;
                 Game.Score = 0;
                 return;
             };
@@ -464,6 +473,11 @@ namespace Shooter
         public void UpdateScore(object sender, EventArgs e)
         {
             labelScoreNumber.Text = Game.Score.ToString();
+        }
+
+        private void buttonNameConfirmation_Click(object sender, EventArgs e)
+        {
+            textBoxPlayerName.Enabled = false;
         }
     }
 }
