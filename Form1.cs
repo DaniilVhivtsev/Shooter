@@ -50,6 +50,7 @@ namespace Shooter
             {
                 this.Controls.Remove(StartButton);
                 this.Controls.Remove(CustomizationButton);
+                this.Controls.Remove(ResultsButton);
                 timer1 = new Timer();
                 timer1.Interval = 1;
                 timer1.Tick += new EventHandler(Update);
@@ -108,7 +109,7 @@ namespace Shooter
             {
                 BackColor = Color.LightGray,
                 ForeColor = Color.Black,
-                Text = "Вернуть_начальное_состояние формы",
+                Text = "Вернуться в меню",
                 Size = new Size(200, 30),
                 Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2, SystemInformation.PrimaryMonitorSize.Height / 2)
             };
@@ -160,6 +161,7 @@ namespace Shooter
             {
                 this.Controls.Remove(StartButton);
                 this.Controls.Remove(CustomizationButton);
+                this.Controls.Remove(ResultsButton);
                 Label speedOfShootButtonHero = new Label()
                 {
                     BackColor = Color.LightGray,
@@ -427,6 +429,28 @@ namespace Shooter
                     list.Add(new InstrumentsForResults { Name = name, Score = score, Remove = removeButton });
 
                 }
+
+                Button removeForm = new Button()
+                {
+                    BackColor = Color.LightGray,
+                    ForeColor = Color.Black,
+                    Text = "Вернуться в меню",
+                    Size = new Size(200, 30),
+                    Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2 + 400, SystemInformation.PrimaryMonitorSize.Height / 2 - 30)
+                };
+                this.Controls.Add(removeForm);
+
+                removeForm.Click += (e, a) =>
+                {
+                    this.Controls.Remove(removeForm);
+                    foreach(var instruments in list)
+                    {
+                        this.Controls.Remove(instruments.Name);
+                        this.Controls.Remove(instruments.Score);
+                        this.Controls.Remove(instruments.Remove);
+                    }
+                    startForm();
+                };
             };
         }
 
