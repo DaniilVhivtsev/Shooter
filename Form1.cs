@@ -357,7 +357,7 @@ namespace Shooter
             ResultsButton = new Button();
             ResultsButton.BackColor = Color.LightGray;
             ResultsButton.ForeColor = Color.Black;
-            ResultsButton.Text = "Настройка_игры";
+            ResultsButton.Text = "Результаты";
             ResultsButton.Size = new Size(100, 30);
             ResultsButton.Location = new Point(StartButton.Location.X, CustomizationButton.Location.Y + CustomizationButton.Size.Height + 20);
             this.Controls.Add(ResultsButton);
@@ -394,7 +394,7 @@ namespace Shooter
                             ForeColor = Color.Black,
                             Text = person.Name,
                             Size = new Size(100, 30),
-                            Location = new Point(list[list.Count - 1].Name.Location.X, list[list.Count - 1].Name.Location.Y + 20)
+                            Location = new Point(list[list.Count - 1].Name.Location.X, list[list.Count - 1].Name.Location.Y + 50)
                         };
                         this.Controls.Add(name);
                     }
