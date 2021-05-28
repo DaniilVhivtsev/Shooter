@@ -34,7 +34,7 @@ namespace Shooter.Controllers
             
         }
 
-        private static void ReadJsonFile()
+        public static void ReadJsonFile()
         {
             listScoreData = File.Exists("Data.json") ? JsonConvert.DeserializeObject<List<Person>>(File.ReadAllText("Data.json")) : new List<Person>();
         }

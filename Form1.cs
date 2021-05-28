@@ -18,6 +18,7 @@ namespace Shooter
     {
         Button StartButton;
         Button CustomizationButton;
+        Button ResultsButton;
 
         public Timer timer1;
 
@@ -37,6 +38,8 @@ namespace Shooter
             PressStartButton();
 
             PressCustomizationButton();
+
+            PressResultsButton();
         }
 
         public void PressStartButton()
@@ -349,6 +352,83 @@ namespace Shooter
 
             };
         }      
+        public void PressResultsButton()
+        {
+            ResultsButton = new Button();
+            ResultsButton.BackColor = Color.LightGray;
+            ResultsButton.ForeColor = Color.Black;
+            ResultsButton.Text = "Настройка_игры";
+            ResultsButton.Size = new Size(100, 30);
+            ResultsButton.Location = new Point(StartButton.Location.X, CustomizationButton.Location.Y + CustomizationButton.Size.Height + 20);
+            this.Controls.Add(ResultsButton);
+
+            ResultsButton.Click += (e, a) =>
+            {
+                this.Controls.Remove(StartButton);
+                this.Controls.Remove(CustomizationButton);
+                this.Controls.Remove(ResultsButton);
+                JsonDataActivities.ReadJsonFile();
+
+                var list = new List<InstrumentsForResults>();
+                var firstElement = true;
+                foreach(var person in JsonDataActivities.listScoreData)
+                {
+                    var name = new Label();
+                    if (firstElement)
+                    {
+                        name = new Label()
+                        {
+                            BackColor = Color.LightGray,
+                            ForeColor = Color.Black,
+                            Text = person.Name,
+                            Size = new Size(100, 30),
+                            Location = new Point(SystemInformation.PrimaryMonitorSize.Width / 2 - 100, SystemInformation.PrimaryMonitorSize.Height / 2 - 30)
+                        };
+                        this.Controls.Add(name);
+                        firstElement = false;
+                    } else
+                    {
+                        name = new Label()
+                        {
+                            BackColor = Color.LightGray,
+                            ForeColor = Color.Black,
+                            Text = person.Name,
+                            Size = new Size(100, 30),
+                            Location = new Point(list[list.Count - 1].Name.Location.X, list[list.Count - 1].Name.Location.Y + 20)
+                        };
+                        this.Controls.Add(name);
+                    }
+                    var score = new Label()
+                    {
+                        BackColor = Color.LightGray,
+                        ForeColor = Color.Black,
+                        Text = person.Score.ToString(),
+                        Size = new Size(100, 30),
+                        Location = new Point(name.Location.X + name.Width + 10, name.Location.Y)
+                    };
+                    this.Controls.Add(score);
+
+                    var removeButton = new Button()
+                    {
+                        BackColor = Color.LightGray,
+                        ForeColor = Color.Black,
+                        Text = "Remove score",
+                        Size = new Size(100, 30),
+                        Location = new Point(score.Location.X + name.Width + 10, name.Location.Y)
+                    };
+
+                    removeButton.Click += (e, a) =>
+                    {
+                        JsonDataActivities.listScoreData.Remove(person);
+                        JsonDataActivities.FirstStepToMakeJsonFile();
+                    };
+                    this.Controls.Add(removeButton);
+
+                    list.Add(new InstrumentsForResults { Name = name, Score = score, Remove = removeButton });
+
+                }
+            };
+        }
 
         public void Update(object sender, EventArgs e)
         {
