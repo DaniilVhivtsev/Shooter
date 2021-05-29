@@ -43,7 +43,7 @@ namespace Shooter.Model
             Death = false;
         }
 
-        public void DrawEnemy(Graphics g)
+        /*public void DrawEnemy(Graphics g)
         {
             if (!Death)
                 g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(17, 21)), 5, 11, 17, 21, GraphicsUnit.Point);
@@ -51,7 +51,7 @@ namespace Shooter.Model
                 g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(Position.X, Position.Y), new Size(31, 31)), 32 * 6, 32 * 4, 31, 31, GraphicsUnit.Pixel);
 
             g.DrawRectangle(new Pen(Color.Black, 2), Position.X, Position.Y, 17, 21);
-        }
+        }*/
 
         public void EnemyMovement(Point heroPont)
         {

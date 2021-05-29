@@ -11,26 +11,26 @@ namespace Shooter.Controllers
     public static class MapController
     {
 
-        public static int mapHeight;
-        public static int mapWidth;
-        public static int cellSize = 31;
-        public static int[,] map = new int[mapHeight, mapWidth];
-        public static Image spriteSheet;
-        public static List<MapEntity> mapObjects;
+        public static int MapHeight;
+        public static int MapWidth;
+        public static int CellSize = 31;
+        public static int[,] Map = new int[MapHeight, MapWidth];
+        public static Image SpriteSheet;
+        public static List<MapEntity> MapObjects;
 
-        public static Image spriteSheetForEnemy;
-        public static List<Enemy> enemies;
+        public static Image SpriteSheetForEnemy;
+        public static List<Enemy> Enemies;
 
 /*        C:\Users\Данил\Source\Repos\DaniilVhivtsev\Shooter\Sprites\Forest.png
 */        public static void Init()
         {
-            map = GetMap();
-            mapHeight = map.GetLength(1);
-            mapWidth = map.GetLength(0);
-            spriteSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Forest.png"));
-            mapObjects = new List<MapEntity>();
-            spriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
-            enemies = new List<Enemy>();
+            Map = GetMap();
+            MapHeight = Map.GetLength(1);
+            MapWidth = Map.GetLength(0);
+            SpriteSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Forest.png"));
+            MapObjects = new List<MapEntity>();
+            SpriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
+            Enemies = new List<Enemy>();
             MakeEnemies();
         }
         public static int[,] GetMap() => new int[,]
@@ -63,26 +63,26 @@ namespace Shooter.Controllers
 
         public static void SeedMap(Graphics g)
         {
-            for (int i = 0; i < mapWidth; i++)
-                for (int j = 0; j < mapHeight; j++)
+            for (int i = 0; i < MapWidth; i++)
+                for (int j = 0; j < MapHeight; j++)
                 {
-                    if (map[i, j] == 10)
+                    if (Map[i, j] == 10)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(107, 114)), 203, 298, 107, 114, GraphicsUnit.Pixel);
-                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(107, 114));
-                        mapObjects.Add(mapEntity);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(107, 114)), 203, 298, 107, 114, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * CellSize, i * CellSize), new Size(107, 114));
+                        MapObjects.Add(mapEntity);
                     }
-                    if (map[i, j] == 11)
+                    if (Map[i, j] == 11)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(20, 12)), 581, 114, 19, 11, GraphicsUnit.Pixel);
-                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 12));
-                        mapObjects.Add(mapEntity);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(20, 12)), 581, 114, 19, 11, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * CellSize, i * CellSize), new Size(20, 12));
+                        MapObjects.Add(mapEntity);
                     }
-                    if (map[i, j] == 20)
+                    if (Map[i, j] == 20)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(20, 18)), 453, 225, 18, 22, GraphicsUnit.Pixel);
-                        MapEntity mapEntity = new MapEntity(new Point(j * cellSize, i * cellSize), new Size(20, 18));
-                        mapObjects.Add(mapEntity);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(20, 18)), 453, 225, 18, 22, GraphicsUnit.Pixel);
+                        MapEntity mapEntity = new MapEntity(new Point(j * CellSize, i * CellSize), new Size(20, 18));
+                        MapObjects.Add(mapEntity);
                     }
                     /*if (map[i, j] == 100)
                     {
@@ -97,17 +97,17 @@ namespace Shooter.Controllers
         public static void MakeEnemies()
         {
             var numberOfEnemies = 0;
-            for (int i = 0; i < mapWidth; i++)
-                for (int j = 0; j < mapHeight; j++)
+            for (int i = 0; i < MapWidth; i++)
+                for (int j = 0; j < MapHeight; j++)
                 {
-                    if (map[i, j] == 100)
+                    if (Map[i, j] == 100)
                     {
                         if (numberOfEnemies < Game.numberOfEnemiesNumericNumber)
                         {
                             /*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*/
                             var enemyObject = new Enemy(new Point(j, i), 31, 100);
                             /*enemyObject.DrawEnemy(g);*/
-                            enemies.Add(enemyObject);
+                            Enemies.Add(enemyObject);
                             numberOfEnemies++;
                         }
                     }
@@ -116,52 +116,52 @@ namespace Shooter.Controllers
 
         public static void DrawEnemies(Graphics g)
         {
-            foreach (var enemy in enemies)
+            foreach (var enemy in Enemies)
             {
-                enemy.DrawEnemy(g);
+                DrawEnemy(g, enemy);
             }
         }
 
         public static void DrawMap(Graphics g)
         {
-            for (int i = 0; i < mapWidth; i++)
-                for (int j = 0; j < mapHeight; j++)
+            for (int i = 0; i < MapWidth; i++)
+                for (int j = 0; j < MapHeight; j++)
                 {
-                    if (map[i, j] == 1)
+                    if (Map[i, j] == 1)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 96, 0, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 96, 0, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 2)
+                    else if(Map[i, j] == 2)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 170, 0, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 170, 0, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 3)
+                    else if(Map[i, j] == 3)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 96, 75, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 96, 75, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 4)
+                    else if(Map[i, j] == 4)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 170, 75, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 170, 75, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 5)
+                    else if(Map[i, j] == 5)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 96, 20, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 96, 20, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 6)
+                    else if(Map[i, j] == 6)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 120, 0, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 120, 0, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 7)
+                    else if(Map[i, j] == 7)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 170,30, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 170,30, 20, 20, GraphicsUnit.Pixel);
                     }
-                    else if(map[i, j] == 8)
+                    else if(Map[i, j] == 8)
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 120, 75, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 120, 75, 20, 20, GraphicsUnit.Pixel);
                     }
                     else
                     {
-                        g.DrawImage(spriteSheet, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(cellSize, cellSize)), 0, 0, 20, 20, GraphicsUnit.Pixel);
+                        g.DrawImage(SpriteSheet, new Rectangle(new Point(j * CellSize, i * CellSize), new Size(CellSize, CellSize)), 0, 0, 20, 20, GraphicsUnit.Pixel);
                     }
                 }
             DrawEnemies(g);
@@ -170,12 +170,32 @@ namespace Shooter.Controllers
 
         public static int GetWidth()
         {
-            return cellSize * (mapWidth) + 5;
+            return CellSize * (MapWidth) + 5;
         }
 
         public static int GetHeight()
         {
-            return cellSize * (mapHeight + 1) - 5 ;
+            return CellSize * (MapHeight + 1) - 5 ;
+        }
+
+        public static void PlayAnimation(Graphics g, Entity player)
+        {
+            if (player.currentFrame < player.currentLimit - 1)
+                player.currentFrame++;
+            else if (!Entity.Death)
+                player.currentFrame = 0;
+
+            g.DrawImage(player.spriteSheet, new Rectangle(new Point(Entity.posX, Entity.posY), new Size(player.size, player.size)), 32 * player.currentFrame, 32 * player.currentAnimation, player.size, player.size, GraphicsUnit.Pixel);
+        }
+
+        public static void DrawEnemy(Graphics g, Enemy enemy)
+        {
+            if (!enemy.Death)
+                g.DrawImage(SpriteSheetForEnemy, new Rectangle(new Point(enemy.Position.X, enemy.Position.Y), new Size(17, 21)), 5, 11, 17, 21, GraphicsUnit.Point);
+            else
+                g.DrawImage(SpriteSheetForEnemy, new Rectangle(new Point(enemy.Position.X, enemy.Position.Y), new Size(31, 31)), 32 * 6, 32 * 4, 31, 31, GraphicsUnit.Pixel);
+
+            g.DrawRectangle(new Pen(Color.Black, 2), enemy.Position.X, enemy.Position.Y, 17, 21);
         }
     }
 }
