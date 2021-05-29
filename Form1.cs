@@ -97,10 +97,84 @@ namespace Shooter
         }
         private void ButtonForGameInstructions()
         {
-            KeyDown += new KeyEventHandler(Game.OnPress);
-            KeyUp += new KeyEventHandler(Game.OnKeyUp);
-            MouseDown += new MouseEventHandler(Game.OnMousePress);
-            MouseUp += new MouseEventHandler(Game.OnMouseUp);
+            KeyDown += new KeyEventHandler(OnPress);
+            KeyUp += new KeyEventHandler(OnKeyUp);
+            MouseDown += new MouseEventHandler(OnMousePress);
+            MouseUp += new MouseEventHandler(OnMouseUp);
+        }
+
+        public static void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    Game.Player.DirY = 0;
+                    break;
+                case Keys.S:
+                    Game.Player.DirY = 0;
+                    break;
+                case Keys.A:
+                    Game.Player.DirX = 0;
+                    break;
+                case Keys.D:
+                    Game.Player.DirX = 0;
+                    break;
+            }
+
+            if (Game.Player.DirX == 0 && Game.Player.DirY == 0)
+            {
+                Game.Player.IsMoovng = false;
+                Game.Player.IsShoot = false;
+                Game.Player.SetAnimationConfiguration(2);
+            }
+        }
+        public static void OnPress(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    Game.Player.DirY = -2;
+                    Game.Player.IsMoovng = true;
+                    Game.Player.SetAnimationConfiguration(0);
+                    break;
+                case Keys.S:
+                    Game.Player.DirY = 2;
+                    Game.Player.IsMoovng = true;
+                    Game.Player.SetAnimationConfiguration(0);
+                    break;
+                case Keys.A:
+                    Game.Player.DirX = -2;
+                    Game.Player.IsMoovng = true;
+                    Game.Player.Flip = -1;
+                    Game.Player.SetAnimationConfiguration(7);
+                    break;
+                case Keys.D:
+                    Game.Player.DirX = 2;
+                    Game.Player.IsMoovng = true;
+                    Game.Player.Flip = 1;
+                    Game.Player.SetAnimationConfiguration(0);
+                    break;
+            }
+        }
+        public static void OnMousePress(object sender, MouseEventArgs e)
+        {
+            if (!Entity.Death)
+            {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        Game.Player.DirX = 0;
+                        Game.Player.DirY = 0;
+                        Game.Player.IsMoovng = false;
+                        Game.Player.IsShoot = true;
+                        Game.Player.SetAnimationConfiguration(5);
+                        break;
+                }
+            }
+        }
+        public static void OnMouseUp(object sender, MouseEventArgs e)
+        {
+            Game.Player.SetAnimationConfiguration(2);
         }
 
         private void RemoveButtonFromGame()
