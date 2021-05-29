@@ -133,26 +133,16 @@ namespace Shooter
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    Game.Player.DirY = -2;
-                    Game.Player.IsMoovng = true;
-                    Game.Player.SetAnimationConfiguration(0);
+                    Game.Player.OnPressW();
                     break;
                 case Keys.S:
-                    Game.Player.DirY = 2;
-                    Game.Player.IsMoovng = true;
-                    Game.Player.SetAnimationConfiguration(0);
+                    Game.Player.OnPressS();
                     break;
                 case Keys.A:
-                    Game.Player.DirX = -2;
-                    Game.Player.IsMoovng = true;
-                    Game.Player.Flip = -1;
-                    Game.Player.SetAnimationConfiguration(7);
+                    Game.Player.OnPressA();
                     break;
                 case Keys.D:
-                    Game.Player.DirX = 2;
-                    Game.Player.IsMoovng = true;
-                    Game.Player.Flip = 1;
-                    Game.Player.SetAnimationConfiguration(0);
+                    Game.Player.OnPressD();
                     break;
             }
         }
@@ -163,11 +153,7 @@ namespace Shooter
                 switch (e.Button)
                 {
                     case MouseButtons.Left:
-                        Game.Player.DirX = 0;
-                        Game.Player.DirY = 0;
-                        Game.Player.IsMoovng = false;
-                        Game.Player.IsShoot = true;
-                        Game.Player.SetAnimationConfiguration(5);
+                        Game.Player.OnMousePressLeftButton();
                         break;
                 }
             }

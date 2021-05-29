@@ -121,5 +121,43 @@ namespace Shooter.Entites
 
             }
         }
+
+        public void OnPressW()
+        {
+            DirY = -2;
+            IsMoovng = true;
+            SetAnimationConfiguration(0);
+        }
+
+        public void OnPressS()
+        {
+            DirY = 2;
+            IsMoovng = true;
+            SetAnimationConfiguration(0);
+        }
+
+        public void OnPressA()
+        {
+            DirX = -2;
+            IsMoovng = true;
+            Flip = -1;
+            SetAnimationConfiguration(7);
+        }
+        public void OnPressD()
+        {
+            DirX = 2;
+            IsMoovng = true;
+            Flip = 1;
+            SetAnimationConfiguration(0);
+        }
+
+        public void OnMousePressLeftButton()
+        {
+            DirX = 0;
+            DirY = 0;
+            IsMoovng = false;
+            IsShoot = true;
+            SetAnimationConfiguration(5);
+        }
     }
 }
