@@ -20,7 +20,7 @@ namespace Shooter
         Button CustomizationButton;
         Button ResultsButton;
 
-        public Timer timer1;
+        public Timer Timer1;
 
 
         public Form1()
@@ -44,30 +44,30 @@ namespace Shooter
 
         public void PressStartButton()
         {
-            StartButtoninstructions();
+            startButtoninstructions();
 
             StartButton.Click += (sender, args) =>
             {
                 this.Controls.Remove(StartButton);
                 this.Controls.Remove(CustomizationButton);
                 this.Controls.Remove(ResultsButton);
-                timer1 = new Timer();
-                timer1.Interval = 1;
-                timer1.Tick += new EventHandler(Update);
+                Timer1 = new Timer();
+                Timer1.Interval = 1;
+                Timer1.Tick += new EventHandler(Update);
 
-                RemoveButtonFromGame();
+                removeButtonFromGame();
 
                 Paint += Game.StartPaint;
 
                 ButtonForGameInstructions();
 
                 Game.Init();
-                timer1.Start();
+                Timer1.Start();
                 EnemiesDo();
 
                 pBarInstructions();
                 labelsScoreInstructions();
-                PlayerNameLabelTextBox();
+                playerNameLabelTextBox();
                 buttonNameConfirmation.Visible = true;
             };
         }
@@ -87,9 +87,9 @@ namespace Shooter
             labelScore.Visible = true;
             labelScoreNumber.Visible = true;
 
-            timer1.Tick += UpdateScore;
+            Timer1.Tick += UpdateScore;
         }
-        private void PlayerNameLabelTextBox()
+        private void playerNameLabelTextBox()
         {
             labelPlayerName.Visible = true;
             textBoxPlayerName.Visible = true;
@@ -177,7 +177,7 @@ namespace Shooter
             Game.Player.SetAnimationConfiguration(2);
         }
 
-        private void RemoveButtonFromGame()
+        private void removeButtonFromGame()
         {
             Button removeForm = new Button()
             {
@@ -195,7 +195,7 @@ namespace Shooter
                 this.Controls.Remove(removeForm);
                 startForm();
                 this.OnTabStopChanged(a);
-                timer1.Stop();
+                Timer1.Stop();
                 Paint -= Game.StartPaint;
                 pBar1.Visible = false;
                 label1.Visible = false;
@@ -209,7 +209,7 @@ namespace Shooter
             };
         }
 
-        private void StartButtoninstructions()
+        private void startButtoninstructions()
         {
             StartButton = new Button();
             StartButton.BackColor = Color.LightGray;
@@ -551,7 +551,7 @@ namespace Shooter
             Game.Shoots.Add(shoot);
 
             var x = 0;
-            timer1.Tick += tickShootOfEnemy;
+            Timer1.Tick += tickShootOfEnemy;
 
             Paint += makePaintEnemyShoot;
 
@@ -570,7 +570,7 @@ namespace Shooter
             {
                 if (!shoot.CanMakeShootHero)
                 {
-                    timer1.Tick -= tickShootOfEnemy;
+                    Timer1.Tick -= tickShootOfEnemy;
                     Game.Shoots.Remove(shoot);
                     Paint -= makePaintEnemyShoot;
                 }
@@ -586,7 +586,7 @@ namespace Shooter
             int i = 0;
             var x = 0;
 
-            timer1.Tick += (e, a) =>
+            Timer1.Tick += (e, a) =>
             {
                 if (x == 30 && Game.NumberOfEnemiesNumericNumber != 0)
                 {
@@ -607,13 +607,13 @@ namespace Shooter
             Game.ShootsEnemy.Add(shoot);
 
 
-            timer1.Tick += TickOfShootByEnemy;
+            Timer1.Tick += tickOfShootByEnemy;
 
             Paint += (sender, args) =>
             {
                 if (!shoot.CanMakeShootEnemy || Game.Enemies[indexOfEnemy].Death || Entity.Death )
                 {
-                    timer1.Tick -= TickOfShootByEnemy;
+                    Timer1.Tick -= tickOfShootByEnemy;
                     Game.ShootsEnemy.Remove(shoot);
                     return;
                 }
@@ -624,7 +624,7 @@ namespace Shooter
                 }
             };
 
-            void TickOfShootByEnemy(Object e, EventArgs args)
+            void tickOfShootByEnemy(Object e, EventArgs args)
             {
                 shoot.MakeShootEnemy();
                 makeSmallerPBar();
@@ -634,7 +634,7 @@ namespace Shooter
         public void MoveEnemy(int index)
         {
             var i = 0;
-            timer1.Tick += (e, a) =>
+            Timer1.Tick += (e, a) =>
             {
                 if (i == 10 && !Game.Enemies[index].Death && !Entity.Death)
                 {
