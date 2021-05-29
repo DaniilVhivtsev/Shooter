@@ -124,8 +124,6 @@ namespace Shooter
             Game.Player.MakeIsMoovinAndIsShootNull();
         }
 
-        
-
         public static void OnPress(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
