@@ -10,10 +10,18 @@ namespace Shooter.Entites
         public static int PosX;
         public static int PosY;
 
-        public int DirX;
-        public int DirY;
+        public int DirX
+        {
+            get; private set;
+        }
+        public int DirY
+        {
+            get; private set;
+        }
+
         public bool IsMoovng;
         public bool IsShoot;
+
         public bool CanMakeOtherShoot;
 
         public int Flip;
@@ -113,28 +121,28 @@ namespace Shooter.Entites
             }
         }
 
-        public void OnPressW()
+        public void OnPressMoveUp()
         {
             DirY = -2;
             IsMoovng = true;
             SetAnimationConfiguration(0);
         }
 
-        public void OnPressS()
+        public void OnPressMoveDown()
         {
             DirY = 2;
             IsMoovng = true;
             SetAnimationConfiguration(0);
         }
 
-        public void OnPressA()
+        public void OnPressMoveLeft()
         {
             DirX = -2;
             IsMoovng = true;
             Flip = -1;
             SetAnimationConfiguration(7);
         }
-        public void OnPressD()
+        public void OnPressMoveRight()
         {
             DirX = 2;
             IsMoovng = true;
@@ -149,6 +157,25 @@ namespace Shooter.Entites
             IsMoovng = false;
             IsShoot = true;
             SetAnimationConfiguration(5);
+        }
+
+        public void OnKeyUpMakeDirYNull()
+        {
+            DirY = 0;
+        }
+        public void OnKeyUpMakeDirXNull()
+        {
+            DirX = 0;
+        }
+
+        public void MakeIsMoovinAndIsShootNull()
+        {
+            if (DirX == 0 && DirY == 0)
+            {
+                IsMoovng = false;
+                IsShoot = false;
+                SetAnimationConfiguration(2);
+            }
         }
     }
 }

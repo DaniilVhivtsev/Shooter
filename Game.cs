@@ -66,8 +66,5 @@ namespace Shooter
             Enemies = new List<Enemy>();
             Enemies = MapController.Enemies;
         }
-        
-
-        
     }
 }

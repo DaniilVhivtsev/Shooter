@@ -108,41 +108,39 @@ namespace Shooter
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    Game.Player.DirY = 0;
+                    Game.Player.OnKeyUpMakeDirYNull();
                     break;
                 case Keys.S:
-                    Game.Player.DirY = 0;
+                    Game.Player.OnKeyUpMakeDirYNull();
                     break;
                 case Keys.A:
-                    Game.Player.DirX = 0;
+                    Game.Player.OnKeyUpMakeDirXNull();
                     break;
                 case Keys.D:
-                    Game.Player.DirX = 0;
+                    Game.Player.OnKeyUpMakeDirXNull();
                     break;
             }
 
-            if (Game.Player.DirX == 0 && Game.Player.DirY == 0)
-            {
-                Game.Player.IsMoovng = false;
-                Game.Player.IsShoot = false;
-                Game.Player.SetAnimationConfiguration(2);
-            }
+            Game.Player.MakeIsMoovinAndIsShootNull();
         }
+
+        
+
         public static void OnPress(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    Game.Player.OnPressW();
+                    Game.Player.OnPressMoveUp();
                     break;
                 case Keys.S:
-                    Game.Player.OnPressS();
+                    Game.Player.OnPressMoveDown();
                     break;
                 case Keys.A:
-                    Game.Player.OnPressA();
+                    Game.Player.OnPressMoveLeft();
                     break;
                 case Keys.D:
-                    Game.Player.OnPressD();
+                    Game.Player.OnPressMoveRight();
                     break;
             }
         }
