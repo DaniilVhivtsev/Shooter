@@ -178,14 +178,14 @@ namespace Shooter
                     ForeColor = Color.Black,
                     Size = new Size(100, 30),
                     Location = new Point(speedOfShootButtonHero.Location.X + speedOfShootButtonHero.Width + 10, speedOfShootButtonHero.Location.Y),
-                    Value = Game.speedOfShootButtonHeroNumericNumber,
+                    Value = Game.SpeedOfShootButtonHeroNumericNumber,
                     Maximum = 10,
                     Minimum = 0
                 };
                 this.Controls.Add(speedOfShootButtonHeroNumeric);
                 speedOfShootButtonHeroNumeric.ValueChanged += (e, a) =>
                 {
-                    Game.speedOfShootButtonHeroNumericNumber = int.Parse(speedOfShootButtonHeroNumeric.Value.ToString());
+                    Game.SpeedOfShootButtonHeroNumericNumber = int.Parse(speedOfShootButtonHeroNumeric.Value.ToString());
                 };
 
                 Label speedOfShootButtonEnemy = new Label()
@@ -204,14 +204,14 @@ namespace Shooter
                     ForeColor = Color.Black,
                     Size = new Size(100, 30),
                     Location = new Point(speedOfShootButtonEnemy.Location.X + speedOfShootButtonEnemy.Width + 10, speedOfShootButtonEnemy.Location.Y),
-                    Value = Game.speedOfShootButtonEnemyNumericNumber,
+                    Value = Game.SpeedOfShootButtonEnemyNumericNumber,
                     Maximum = 10,
                     Minimum = 0
                 };
                 this.Controls.Add(speedOfShootButtonEnemyNumeric);
                 speedOfShootButtonEnemyNumeric.ValueChanged += (e, a) =>
                 {
-                    Game.speedOfShootButtonEnemyNumericNumber = int.Parse(speedOfShootButtonEnemyNumeric.Value.ToString());
+                    Game.SpeedOfShootButtonEnemyNumericNumber = int.Parse(speedOfShootButtonEnemyNumeric.Value.ToString());
                 };
 
 
@@ -231,14 +231,14 @@ namespace Shooter
                     ForeColor = Color.Black,
                     Size = new Size(100, 30),
                     Location = new Point(numberOfEnemies.Location.X + numberOfEnemies.Width + 10, numberOfEnemies.Location.Y),
-                    Value = Game.numberOfEnemiesNumericNumber,
+                    Value = Game.NumberOfEnemiesNumericNumber,
                     Maximum = 5,
                     Minimum = 0
                 };
                 this.Controls.Add(numberOfEnemiesNumeric);
                 numberOfEnemiesNumeric.ValueChanged += (e, a) =>
                 {
-                    Game.numberOfEnemiesNumericNumber = int.Parse(numberOfEnemiesNumeric.Value.ToString());
+                    Game.NumberOfEnemiesNumericNumber = int.Parse(numberOfEnemiesNumeric.Value.ToString());
                 };
 
                 Label speedOfEnemy = new Label()
@@ -257,14 +257,14 @@ namespace Shooter
                     ForeColor = Color.Black,
                     Size = new Size(100, 30),
                     Location = new Point(speedOfEnemy.Location.X + speedOfEnemy.Width + 10, speedOfEnemy.Location.Y),
-                    Value = Game.speedOfEnemyNumericNumber,
+                    Value = Game.SpeedOfEnemyNumericNumber,
                     Maximum = 10,
                     Minimum = 0
                 };
                 this.Controls.Add(speedOfEnemyNumeric);
                 speedOfEnemyNumeric.ValueChanged += (e, a) =>
                 {
-                    Game.speedOfEnemyNumericNumber = int.Parse(speedOfEnemyNumeric.Value.ToString());
+                    Game.SpeedOfEnemyNumericNumber = int.Parse(speedOfEnemyNumeric.Value.ToString());
                 };
 
 
@@ -284,14 +284,14 @@ namespace Shooter
                     ForeColor = Color.Black,
                     Size = new Size(100, 30),
                     Location = new Point(enemyDamage.Location.X + enemyDamage.Width + 10, enemyDamage.Location.Y),
-                    Value = Game.enemyDamageNumericNumber,
+                    Value = Game.EnemyDamageNumericNumber,
                     Maximum = 50,
                     Minimum = 0
                 };
                 this.Controls.Add(enemyDamageNumeric);
                 enemyDamageNumeric.ValueChanged += (e, a) =>
                 {
-                    Game.enemyDamageNumericNumber = int.Parse(enemyDamageNumeric.Value.ToString());
+                    Game.EnemyDamageNumericNumber = int.Parse(enemyDamageNumeric.Value.ToString());
                 };
 
                 Label heroDamage = new Label()
@@ -310,14 +310,14 @@ namespace Shooter
                     ForeColor = Color.Black,
                     Size = new Size(100, 30),
                     Location = new Point(heroDamage.Location.X + heroDamage.Width + 10, heroDamage.Location.Y),
-                    Value = Game.heroDamageNumericNumber,
+                    Value = Game.HeroDamageNumericNumber,
                     Maximum = 100,
                     Minimum = 0
                 };
                 this.Controls.Add(heroDamageNumeric);
                 heroDamageNumeric.ValueChanged += (e, a) =>
                 {
-                    Game.heroDamageNumericNumber = int.Parse(heroDamageNumeric.Value.ToString());
+                    Game.HeroDamageNumericNumber = int.Parse(heroDamageNumeric.Value.ToString());
                 };
 
                 Button removeForm = new Button()
@@ -373,7 +373,7 @@ namespace Shooter
 
                 var list = new List<InstrumentsForResults>();
                 var firstElement = true;
-                foreach(var person in JsonDataActivities.listScoreData)
+                foreach(var person in JsonDataActivities.ListScoreData)
                 {
                     var name = new Label();
                     if (firstElement)
@@ -421,7 +421,7 @@ namespace Shooter
 
                     removeButton.Click += (e, a) =>
                     {
-                        JsonDataActivities.listScoreData.Remove(person);
+                        JsonDataActivities.ListScoreData.Remove(person);
                         JsonDataActivities.FirstStepToMakeJsonFile();
                     };
                     this.Controls.Add(removeButton);
@@ -457,13 +457,13 @@ namespace Shooter
         public void Update(object sender, EventArgs e)
         {
 
-            if (!PhysicsController.isCollide(Game.player, new Point(Game.player.dirX, Game.player.dirY)))
+            if (!PhysicsController.IsCollide(Game.Player, new Point(Game.Player.DirX, Game.Player.DirY)))
             {
-                if (Game.player.isMoovng)
-                    Game.player.Move();
-                if (Game.player.isShoot && Game.player.CanMakeOtherShoot)
+                if (Game.Player.IsMoovng)
+                    Game.Player.Move();
+                if (Game.Player.IsShoot && Game.Player.CanMakeOtherShoot)
                 {
-                    Game.player.CanMakeOtherShoot = false;
+                    Game.Player.CanMakeOtherShoot = false;
                     Shooting(sender, e);
                 }
             }
@@ -473,22 +473,22 @@ namespace Shooter
         public void Shooting (object sender, EventArgs args)
         {
 
-            var shoot = new Phisics_Of_Shoot(new Point(Entity.posX, Entity.posY));
-            Game.shoots.Add(shoot);
+            var shoot = new Phisics_Of_Shoot(new Point(Entity.PosX, Entity.PosY));
+            Game.Shoots.Add(shoot);
 
             var x = 0;
             timer1.Tick += tickShootOfEnemy;
 
             Paint += makePaintEnemyShoot;
 
-            Game.player.isShoot = false;
+            Game.Player.IsShoot = false;
 
 
             void tickShootOfEnemy (Object e, EventArgs args)
             {
                 shoot.MakeShoot();
                 if (x == 10)
-                    Game.player.CanMakeOtherShoot = true;
+                    Game.Player.CanMakeOtherShoot = true;
                 x++;
             }
 
@@ -497,7 +497,7 @@ namespace Shooter
                 if (!shoot.CanMakeShootHero)
                 {
                     timer1.Tick -= tickShootOfEnemy;
-                    Game.shoots.Remove(shoot);
+                    Game.Shoots.Remove(shoot);
                     Paint -= makePaintEnemyShoot;
                 }
                 else
@@ -514,12 +514,12 @@ namespace Shooter
 
             timer1.Tick += (e, a) =>
             {
-                if (x == 30 && Game.numberOfEnemiesNumericNumber != 0)
+                if (x == 30 && Game.NumberOfEnemiesNumericNumber != 0)
                 {
                     MakeShootByEnemy(i);
                     MoveEnemy(i);
                     i++;
-                    if (i == Game.numberOfEnemiesNumericNumber)
+                    if (i == Game.NumberOfEnemiesNumericNumber)
                         i = 0;
                     x = 0;
                 }
@@ -529,18 +529,18 @@ namespace Shooter
 
         public void MakeShootByEnemy(int indexOfEnemy)
         {
-            var shoot = new Phisics_Of_Shoot(new Point(Game.enemies[indexOfEnemy].Position.X, Game.enemies[indexOfEnemy].Position.Y), new Point(Entity.posX, Entity.posY));
-            Game.shootsEnemy.Add(shoot);
+            var shoot = new Phisics_Of_Shoot(new Point(Game.Enemies[indexOfEnemy].Position.X, Game.Enemies[indexOfEnemy].Position.Y), new Point(Entity.PosX, Entity.PosY));
+            Game.ShootsEnemy.Add(shoot);
 
 
             timer1.Tick += TickOfShootByEnemy;
 
             Paint += (sender, args) =>
             {
-                if (!shoot.CanMakeShootEnemy || Game.enemies[indexOfEnemy].Death || Entity.Death )
+                if (!shoot.CanMakeShootEnemy || Game.Enemies[indexOfEnemy].Death || Entity.Death )
                 {
                     timer1.Tick -= TickOfShootByEnemy;
-                    Game.shootsEnemy.Remove(shoot);
+                    Game.ShootsEnemy.Remove(shoot);
                     return;
                 }
                 else
@@ -562,9 +562,9 @@ namespace Shooter
             var i = 0;
             timer1.Tick += (e, a) =>
             {
-                if (i == 10 && !Game.enemies[index].Death && !Entity.Death)
+                if (i == 10 && !Game.Enemies[index].Death && !Entity.Death)
                 {
-                    Game.enemies[index].EnemyMovement(new Point(Entity.posX, Entity.posY));
+                    Game.Enemies[index].EnemyMovement(new Point(Entity.PosX, Entity.PosY));
                     i = 0;
                 }
                 else i++;

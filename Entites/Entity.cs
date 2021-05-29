@@ -7,29 +7,29 @@ namespace Shooter.Entites
 {
     public class Entity
     {
-        public static int posX;
-        public static int posY;
+        public static int PosX;
+        public static int PosY;
 
-        public int dirX;
-        public int dirY;
-        public bool isMoovng;
-        public bool isShoot;
+        public int DirX;
+        public int DirY;
+        public bool IsMoovng;
+        public bool IsShoot;
         public bool CanMakeOtherShoot;
 
-        public int flip;
+        public int Flip;
 
-        public int currentAnimation;
-        public int currentFrame;
-        public int currentLimit;
+        public int CurrentAnimation;
+        public int CurrentFrame;
+        public int CurrentLimit;
 
-        public int idleFrames;
-        public int runFrames;
-        public int atackFrames;
-        public int deathFrames;
+        public int IdleFrames;
+        public int RunFrames;
+        public int AtackFrames;
+        public int DeathFrames;
 
-        public int size;
+        public int Size;
 
-        public Image spriteSheet;
+        public Image SpriteSheet;
 
         public static bool Death;
 
@@ -58,18 +58,18 @@ namespace Shooter.Entites
 
         public Entity(int positionX, int positionY, int idleFrames, int runFrames, int atackFrames, int deathFrames, Image spriteSheet)
         {
-            posX = positionX;
-            posY = positionY;
-            this.idleFrames = idleFrames;
-            this.runFrames = runFrames;
-            this.atackFrames = atackFrames;
-            this.deathFrames = deathFrames;
-            this.spriteSheet = spriteSheet;
-            size = 31;
-            currentAnimation = 2;
-            currentFrame = 0;
-            currentLimit = idleFrames;
-            flip = 1;
+            PosX = positionX;
+            PosY = positionY;
+            this.IdleFrames = idleFrames;
+            this.RunFrames = runFrames;
+            this.AtackFrames = atackFrames;
+            this.DeathFrames = deathFrames;
+            this.SpriteSheet = spriteSheet;
+            Size = 31;
+            CurrentAnimation = 2;
+            CurrentFrame = 0;
+            CurrentLimit = idleFrames;
+            Flip = 1;
 
             Health = 100;
             Death = false;
@@ -80,18 +80,18 @@ namespace Shooter.Entites
         {
             if (!Death)
             {
-                posX += dirX;
-                posY += dirY;
+                PosX += DirX;
+                PosY += DirY;
             }
         }
         public void PlayAnimation(Graphics g)
         {
-            if (currentFrame < currentLimit - 1)
-                currentFrame++;
+            if (CurrentFrame < CurrentLimit - 1)
+                CurrentFrame++;
             else if (!Death) 
-                currentFrame = 0;
+                CurrentFrame = 0;
 
-            g.DrawImage(spriteSheet, new Rectangle(new Point(posX, posY), new Size(size, size)), 32 * currentFrame, 32 * currentAnimation, size, size, GraphicsUnit.Pixel);
+            g.DrawImage(SpriteSheet, new Rectangle(new Point(PosX, PosY), new Size(Size, Size)), 32 * CurrentFrame, 32 * CurrentAnimation, Size, Size, GraphicsUnit.Pixel);
         }
 
         public void SetAnimationConfiguration(int currentAnimation)
@@ -99,24 +99,24 @@ namespace Shooter.Entites
             if (Death)
                 currentAnimation = 4;
             
-            this.currentAnimation = currentAnimation;
+            this.CurrentAnimation = currentAnimation;
 
             switch (currentAnimation)
             {
                 case 2:
-                    currentLimit = idleFrames;
+                    CurrentLimit = IdleFrames;
                     break;
                 case 0:
-                    currentLimit = runFrames;
+                    CurrentLimit = RunFrames;
                     break;
                 case 5:
-                    currentLimit = atackFrames;
+                    CurrentLimit = AtackFrames;
                     break;
                 case 4:
-                    currentLimit = deathFrames;
+                    CurrentLimit = DeathFrames;
                     break;
                 case 7:
-                    currentLimit = runFrames;
+                    CurrentLimit = RunFrames;
                     break;
 
             }

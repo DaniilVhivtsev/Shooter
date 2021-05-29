@@ -15,11 +15,11 @@ namespace Shooter.Controllers
     }
     public static class JsonDataActivities
     {
-        public static List<Person> listScoreData;
+        public static List<Person> ListScoreData;
         public static void MakeJsonFile(Person person)
         {
             ReadJsonFile();
-            listScoreData.Add(person);
+            ListScoreData.Add(person);
             FirstStepToMakeJsonFile();
         }
         public static void FirstStepToMakeJsonFile()
@@ -30,13 +30,13 @@ namespace Shooter.Controllers
                 await JsonSerializer.SerializeAsync<List<Person>>(fs, listScoreData);
                 Console.WriteLine("Data has been saved to file");
             }*/
-            File.WriteAllText("Data.json", JsonConvert.SerializeObject(listScoreData));
+            File.WriteAllText("Data.json", JsonConvert.SerializeObject(ListScoreData));
             
         }
 
         public static void ReadJsonFile()
         {
-            listScoreData = File.Exists("Data.json") ? JsonConvert.DeserializeObject<List<Person>>(File.ReadAllText("Data.json")) : new List<Person>();
+            ListScoreData = File.Exists("Data.json") ? JsonConvert.DeserializeObject<List<Person>>(File.ReadAllText("Data.json")) : new List<Person>();
         }
     }
 }

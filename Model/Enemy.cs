@@ -30,7 +30,7 @@ namespace Shooter.Model
 
         public Point Position;
         public static int Size;
-        public Image spriteSheetForEnemy;
+        public Image SpriteSheetForEnemy;
         public bool Death;
 
         public Enemy(Point position, int size, int health)
@@ -39,7 +39,7 @@ namespace Shooter.Model
             this.Position.Y = position.Y * size;
             Size = size;
             this.Health = health;
-            spriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
+            SpriteSheetForEnemy = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
             Death = false;
         }
 
@@ -61,7 +61,7 @@ namespace Shooter.Model
             {
                 var posX = (heroPont.X - Position.X) >= 2 ? 2 : (heroPont.X - Position.X) < 2 ? -2 : 0;
                 var posY = (heroPont.Y - Position.Y) >= 2 ? 2 : (heroPont.Y - Position.Y) < 2 ? -2 : 0;
-                if (!PhysicsController.isCollide(Position, new Point(posX, posY)))
+                if (!PhysicsController.IsCollide(Position, new Point(posX, posY)))
                 {
                     Position.X += posX;
                     Position.Y += posY;
@@ -71,7 +71,7 @@ namespace Shooter.Model
             {
                 var posX = (heroPont.X - Position.X) >= 2 ? -2 : (heroPont.X - Position.X) < 2 ? 2 : 0;
                 var posY = (heroPont.Y - Position.Y) >= 2 ? -2 : (heroPont.Y - Position.Y) < 2 ? 2 : 0;
-                if (!PhysicsController.isCollide(Position, new Point(posX, posY)))
+                if (!PhysicsController.IsCollide(Position, new Point(posX, posY)))
                 {
                     Position.X += posX;
                     Position.Y += posY;
