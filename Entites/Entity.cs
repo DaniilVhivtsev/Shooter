@@ -84,15 +84,6 @@ namespace Shooter.Entites
                 PosY += DirY;
             }
         }
-        public void PlayAnimation(Graphics g)
-        {
-            if (CurrentFrame < CurrentLimit - 1)
-                CurrentFrame++;
-            else if (!Death) 
-                CurrentFrame = 0;
-
-            g.DrawImage(SpriteSheet, new Rectangle(new Point(PosX, PosY), new Size(Size, Size)), 32 * CurrentFrame, 32 * CurrentAnimation, Size, Size, GraphicsUnit.Pixel);
-        }
 
         public void SetAnimationConfiguration(int currentAnimation)
         {
