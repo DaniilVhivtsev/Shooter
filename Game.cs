@@ -42,7 +42,7 @@ namespace Shooter
         public static void StartPaint(Object e, PaintEventArgs args)
         {
             MapController.DrawMap(args.Graphics);
-            player.PlayAnimation(args.Graphics);
+            MapController.PlayAnimation(args.Graphics, player);
         }
         public static void Init()
         {
@@ -52,7 +52,7 @@ namespace Shooter
             speedOfEnemyNumericNumber = 0;*/
 
             enemies = new List<Enemy>();
-            enemies = MapController.enemies;
+            enemies = MapController.Enemies;
 
             MapController.Init();
 
@@ -64,7 +64,7 @@ namespace Shooter
             shootsEnemy = new List<Phisics_Of_Shoot>();
 
             enemies = new List<Enemy>();
-            enemies = MapController.enemies;
+            enemies = MapController.Enemies;
         }
         public static void OnKeyUp(object sender, KeyEventArgs e)
         {

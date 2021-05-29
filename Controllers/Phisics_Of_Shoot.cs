@@ -72,9 +72,9 @@ namespace Shooter.Controllers
 
         public void KillEnemy()
         {
-            for (int i = 0; i < MapController.enemies.Count; i++)
+            for (int i = 0; i < MapController.Enemies.Count; i++)
             {
-                var enemy = MapController.enemies[i];
+                var enemy = MapController.Enemies[i];
 
                 if (position.X >= enemy.Position.X  && position.X <= enemy.Position.X + 17)
                     if (position.Y >= enemy.Position.Y && position.Y <= enemy.Position.Y + 21)

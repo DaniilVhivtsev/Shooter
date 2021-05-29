@@ -11,9 +11,9 @@ namespace Shooter.Controllers
     {
         public static bool isCollide(Entity entity, Point dir)
         {
-            for (int i = 0; i < MapController.mapObjects.Count; i++)
+            for (int i = 0; i < MapController.MapObjects.Count; i++)
             {
-                var currentObject = MapController.mapObjects[i];
+                var currentObject = MapController.MapObjects[i];
 
                 PointF delta = new PointF();
                 delta.X = (Entity.posX + entity.size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
@@ -45,9 +45,9 @@ namespace Shooter.Controllers
 
         public static bool isCollide(Point enemy, Point dir)
         {
-            for (int i = 0; i < MapController.mapObjects.Count; i++)
+            for (int i = 0; i < MapController.MapObjects.Count; i++)
             {
-                var currentObject = MapController.mapObjects[i];
+                var currentObject = MapController.MapObjects[i];
 
                 PointF delta = new PointF();
                 delta.X = (enemy.X + Enemy.Size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
