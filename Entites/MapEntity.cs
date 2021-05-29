@@ -7,13 +7,13 @@ namespace Shooter.Entites
 {
     public class MapEntity
     {
-        public PointF position;
-        public Size size;
+        public PointF Position;
+        public Size Size;
 
         public MapEntity(PointF pos, Size size)
         {
-            this.position = pos;
-            this.size = size;
+            this.Position = pos;
+            this.Size = size;
         }
     }
 }

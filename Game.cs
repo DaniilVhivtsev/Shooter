@@ -12,37 +12,37 @@ namespace Shooter
 {
     public static class Game
     {
-        public static Image dwarfSheet;
-        public static Entity player;
+        public static Image DwarfSheet;
+        public static Entity Player;
 
-        public static List<Enemy> enemies;
+        public static List<Enemy> Enemies;
 
-        public static List<Phisics_Of_Shoot> shoots;
-        public static List<Phisics_Of_Shoot> shootsEnemy;
+        public static List<Phisics_Of_Shoot> Shoots;
+        public static List<Phisics_Of_Shoot> ShootsEnemy;
 
-        public static int speedOfShootButtonHeroNumericNumber
+        public static int SpeedOfShootButtonHeroNumericNumber
         {
             get; set;
         }
-        public static int speedOfShootButtonEnemyNumericNumber
+        public static int SpeedOfShootButtonEnemyNumericNumber
         {
             get; set;
         }
-        public static int numberOfEnemiesNumericNumber = 2;
+        public static int NumberOfEnemiesNumericNumber = 2;
 
-        public static int speedOfEnemyNumericNumber
+        public static int SpeedOfEnemyNumericNumber
         {
             get; set;
         }
-        public static int enemyDamageNumericNumber = 10;
-        public static int heroDamageNumericNumber = 25;
+        public static int EnemyDamageNumericNumber = 10;
+        public static int HeroDamageNumericNumber = 25;
 
         public static int Score = 0;
 
         public static void StartPaint(Object e, PaintEventArgs args)
         {
             MapController.DrawMap(args.Graphics);
-            MapController.PlayAnimation(args.Graphics, player);
+            MapController.PlayAnimation(args.Graphics, Player);
         }
         public static void Init()
         {
@@ -51,44 +51,44 @@ namespace Shooter
             numberOfEnemiesNumericNumber = 0;
             speedOfEnemyNumericNumber = 0;*/
 
-            enemies = new List<Enemy>();
-            enemies = MapController.Enemies;
+            Enemies = new List<Enemy>();
+            Enemies = MapController.Enemies;
 
             MapController.Init();
 
-            dwarfSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
+            DwarfSheet = new Bitmap(Path.Combine(new DirectoryInfo(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName.ToString(), "Sprites\\Man.png"));
 
-            player = new Entity(310, 310, Hero.idleFrames, Hero.runFrames, Hero.atackFrames, Hero.deathFrames, dwarfSheet);
+            Player = new Entity(310, 310, Hero.IdleFrames, Hero.RunFrames, Hero.AtackFrames, Hero.DeathFrames, DwarfSheet);
 
-            shoots = new List<Phisics_Of_Shoot>();
-            shootsEnemy = new List<Phisics_Of_Shoot>();
+            Shoots = new List<Phisics_Of_Shoot>();
+            ShootsEnemy = new List<Phisics_Of_Shoot>();
 
-            enemies = new List<Enemy>();
-            enemies = MapController.Enemies;
+            Enemies = new List<Enemy>();
+            Enemies = MapController.Enemies;
         }
         public static void OnKeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    player.dirY = 0;
+                    Player.DirY = 0;
                     break;
                 case Keys.S:
-                    player.dirY = 0;
+                    Player.DirY = 0;
                     break;
                 case Keys.A:
-                    player.dirX = 0;
+                    Player.DirX = 0;
                     break;
                 case Keys.D:
-                    player.dirX = 0;
+                    Player.DirX = 0;
                     break;
             }
 
-            if (player.dirX == 0 && player.dirY == 0)
+            if (Player.DirX == 0 && Player.DirY == 0)
             {
-                player.isMoovng = false;
-                player.isShoot = false;
-                player.SetAnimationConfiguration(2);
+                Player.IsMoovng = false;
+                Player.IsShoot = false;
+                Player.SetAnimationConfiguration(2);
             }
         }
         public static void OnPress(object sender, KeyEventArgs e)
@@ -96,26 +96,26 @@ namespace Shooter
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    player.dirY = -2;
-                    player.isMoovng = true;
-                    player.SetAnimationConfiguration(0);
+                    Player.DirY = -2;
+                    Player.IsMoovng = true;
+                    Player.SetAnimationConfiguration(0);
                     break;
                 case Keys.S:
-                    player.dirY = 2;
-                    player.isMoovng = true;
-                    player.SetAnimationConfiguration(0);
+                    Player.DirY = 2;
+                    Player.IsMoovng = true;
+                    Player.SetAnimationConfiguration(0);
                     break;
                 case Keys.A:
-                    player.dirX = -2;
-                    player.isMoovng = true;
-                    player.flip = -1;
-                    player.SetAnimationConfiguration(7);
+                    Player.DirX = -2;
+                    Player.IsMoovng = true;
+                    Player.Flip = -1;
+                    Player.SetAnimationConfiguration(7);
                     break;
                 case Keys.D:
-                    player.dirX = 2;
-                    player.isMoovng = true;
-                    player.flip = 1;
-                    player.SetAnimationConfiguration(0);
+                    Player.DirX = 2;
+                    Player.IsMoovng = true;
+                    Player.Flip = 1;
+                    Player.SetAnimationConfiguration(0);
                     break;
             }
         }
@@ -126,18 +126,18 @@ namespace Shooter
                 switch (e.Button)
                 {
                     case MouseButtons.Left:
-                        player.dirX = 0;
-                        player.dirY = 0;
-                        player.isMoovng = false;
-                        player.isShoot = true;
-                        player.SetAnimationConfiguration(5);
+                        Player.DirX = 0;
+                        Player.DirY = 0;
+                        Player.IsMoovng = false;
+                        Player.IsShoot = true;
+                        Player.SetAnimationConfiguration(5);
                         break;
                 }
             }
         }
         public static void OnMouseUp(object sender, MouseEventArgs e)
         {
-            player.SetAnimationConfiguration(2);
+            Player.SetAnimationConfiguration(2);
         }
 
         

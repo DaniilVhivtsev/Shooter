@@ -102,7 +102,7 @@ namespace Shooter.Controllers
                 {
                     if (Map[i, j] == 100)
                     {
-                        if (numberOfEnemies < Game.numberOfEnemiesNumericNumber)
+                        if (numberOfEnemies < Game.NumberOfEnemiesNumericNumber)
                         {
                             /*g.DrawImage(spriteSheetForEnemy, new Rectangle(new Point(j * cellSize, i * cellSize), new Size(31, 31)), 32 * 1, 32 * 1, 31, 31, GraphicsUnit.Pixel);*/
                             var enemyObject = new Enemy(new Point(j, i), 31, 100);
@@ -180,12 +180,12 @@ namespace Shooter.Controllers
 
         public static void PlayAnimation(Graphics g, Entity player)
         {
-            if (player.currentFrame < player.currentLimit - 1)
-                player.currentFrame++;
+            if (player.CurrentFrame < player.CurrentLimit - 1)
+                player.CurrentFrame++;
             else if (!Entity.Death)
-                player.currentFrame = 0;
+                player.CurrentFrame = 0;
 
-            g.DrawImage(player.spriteSheet, new Rectangle(new Point(Entity.posX, Entity.posY), new Size(player.size, player.size)), 32 * player.currentFrame, 32 * player.currentAnimation, player.size, player.size, GraphicsUnit.Pixel);
+            g.DrawImage(player.SpriteSheet, new Rectangle(new Point(Entity.PosX, Entity.PosY), new Size(player.Size, player.Size)), 32 * player.CurrentFrame, 32 * player.CurrentAnimation, player.Size, player.Size, GraphicsUnit.Pixel);
         }
 
         public static void DrawEnemy(Graphics g, Enemy enemy)

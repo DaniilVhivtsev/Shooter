@@ -9,19 +9,19 @@ namespace Shooter.Controllers
 {
     public static class PhysicsController
     {
-        public static bool isCollide(Entity entity, Point dir)
+        public static bool IsCollide(Entity entity, Point dir)
         {
             for (int i = 0; i < MapController.MapObjects.Count; i++)
             {
                 var currentObject = MapController.MapObjects[i];
 
                 PointF delta = new PointF();
-                delta.X = (Entity.posX + entity.size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
-                delta.Y = (Entity.posY + entity.size / 2) - (currentObject.position.Y + currentObject.size.Height / 2);
+                delta.X = (Entity.PosX + entity.Size / 2) - (currentObject.Position.X + currentObject.Size.Width / 2);
+                delta.Y = (Entity.PosY + entity.Size / 2) - (currentObject.Position.Y + currentObject.Size.Height / 2);
 
-                if (Math.Abs(delta.X) <= entity.size / 2 + currentObject.size.Width / 2)
+                if (Math.Abs(delta.X) <= entity.Size / 2 + currentObject.Size.Width / 2)
                 {
-                    if (Math.Abs(delta.Y) <= entity.size / 2 + currentObject.size.Height / 2)
+                    if (Math.Abs(delta.Y) <= entity.Size / 2 + currentObject.Size.Height / 2)
                     {
  
                         if (delta.X < 0 && dir.X == 2)
@@ -43,19 +43,19 @@ namespace Shooter.Controllers
             return false;
         }
 
-        public static bool isCollide(Point enemy, Point dir)
+        public static bool IsCollide(Point enemy, Point dir)
         {
             for (int i = 0; i < MapController.MapObjects.Count; i++)
             {
                 var currentObject = MapController.MapObjects[i];
 
                 PointF delta = new PointF();
-                delta.X = (enemy.X + Enemy.Size / 2) - (currentObject.position.X + currentObject.size.Width / 2);
-                delta.Y = (enemy.Y + Enemy.Size / 2) - (currentObject.position.Y + currentObject.size.Height / 2);
+                delta.X = (enemy.X + Enemy.Size / 2) - (currentObject.Position.X + currentObject.Size.Width / 2);
+                delta.Y = (enemy.Y + Enemy.Size / 2) - (currentObject.Position.Y + currentObject.Size.Height / 2);
 
-                if (Math.Abs(delta.X) <= Enemy.Size / 2 + currentObject.size.Width / 2)
+                if (Math.Abs(delta.X) <= Enemy.Size / 2 + currentObject.Size.Width / 2)
                 {
-                    if (Math.Abs(delta.Y) <= Enemy.Size / 2 + currentObject.size.Height / 2)
+                    if (Math.Abs(delta.Y) <= Enemy.Size / 2 + currentObject.Size.Height / 2)
                     {
 
                         if (delta.X < 0 && dir.X == 2)

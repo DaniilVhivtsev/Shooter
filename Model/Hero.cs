@@ -6,9 +6,9 @@ namespace Shooter.Model
 {
     public class Hero
     {
-        public static int idleFrames = 1;
-        public static int runFrames = 6;
-        public static int atackFrames = 9;
-        public static int deathFrames = 7;
+        public static int IdleFrames = 1;
+        public static int RunFrames = 6;
+        public static int AtackFrames = 9;
+        public static int DeathFrames = 7;
     }
 }
