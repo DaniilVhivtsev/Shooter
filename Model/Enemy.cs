@@ -43,6 +43,12 @@ namespace Shooter.Model
             Death = false;
         }
 
+        public Enemy(int health)
+        {
+            this.Health = health;
+            Death = false;
+        }
+
         /*public void DrawEnemy(Graphics g)
         {
             if (!Death)

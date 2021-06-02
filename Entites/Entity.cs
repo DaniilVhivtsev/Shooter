@@ -51,7 +51,7 @@ namespace Shooter.Entites
             set
             {
 
-                if (value == 0)
+                if (value <= 0)
                 {
                     Death = true;
                     health = value;
